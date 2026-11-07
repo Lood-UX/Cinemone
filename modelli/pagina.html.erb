@@ -67,8 +67,8 @@
   /* Barra giorni (pillole) */
   .barra { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top);
            transition: background .25s, box-shadow .25s; }
-  .barra.ombra { background: rgba(255, 236, 228, .72); box-shadow: 0 1px 0 rgba(0,0,0,.05);
-                 -webkit-backdrop-filter: saturate(1.8) blur(20px); backdrop-filter: saturate(1.8) blur(20px); }
+  /* Niente backdrop-filter: su iPhone ricalcola la sfocatura a ogni frame di scorrimento */
+  .barra.ombra { background: rgba(255, 238, 231, .97); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
   .giorni { max-width: 560px; margin: 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
             padding: 12px var(--gutter); scroll-padding-inline: var(--gutter); }
   .giorni::-webkit-scrollbar { display: none; }
@@ -100,12 +100,16 @@
                     border-radius: 999px; padding: 2px 9px; letter-spacing: 0; }
 
   /* Scheda film — stile app Inviti */
+  /* content-visibility: le schede fuori schermo non vengono disegnate finché non ci arrivi */
   .film { position: relative; isolation: isolate; overflow: hidden; color: #fff; background: #3a2a33;
           border-radius: 32px; margin-bottom: 22px; padding-bottom: 14px;
-          box-shadow: 0 30px 50px -28px rgba(70, 20, 40, .65), 0 2px 8px rgba(0,0,0,.08); }
+          content-visibility: auto; contain-intrinsic-size: auto 820px;
+          box-shadow: 0 24px 40px -28px rgba(70, 20, 40, .6); }
   .sfondo { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
-  .sfondo::before { content: ""; position: absolute; inset: -80px; background: var(--poster) center 30% / cover;
-                    filter: blur(44px) saturate(1.8) brightness(.6); transform: scale(1.2); }
+  /* Sfondo sfocato da una locandina piccola: stesso effetto, molto meno lavoro */
+  .sfondo::before { content: ""; position: absolute; inset: -40px;
+                    background: var(--poster-piccola, var(--poster)) center 30% / cover;
+                    filter: blur(26px) saturate(1.8) brightness(.6); transform: translateZ(0) scale(1.1); }
   .sfondo::after { content: ""; position: absolute; inset: 0;
                    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
   .senza-poster { background: linear-gradient(160deg, #6d4a7a, #2b2236 70%); }
@@ -117,8 +121,7 @@
   .locandina.vuota { aspect-ratio: auto; height: 170px; display: grid; place-items: center;
                      font-size: 64px; font-weight: 200; color: rgba(255,255,255,.35); }
   .chip { position: absolute; top: 16px; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 999px;
-          background: rgba(20, 16, 20, .32); border: 1px solid rgba(255,255,255,.18);
-          -webkit-backdrop-filter: blur(14px) saturate(1.5); backdrop-filter: blur(14px) saturate(1.5); }
+          background: rgba(20, 16, 20, .5); border: 1px solid rgba(255,255,255,.18); }
   .chip.sx { left: 16px; }
   .chip.dx { right: 16px; }
 
@@ -131,8 +134,7 @@
   .punto { margin: 0 7px; opacity: .6; }
 
   .vetro { margin: 14px 14px 0; padding: 14px 16px; border-radius: 22px;
-           background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.14);
-           -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); }
+           background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.14); }
   .trama { text-align: center; }
   .trama p { margin: 0; font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.92);
              display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
@@ -186,9 +188,8 @@
   .fasce-bar { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%);
                bottom: calc(env(safe-area-inset-bottom) + 14px); width: min(calc(100% - 28px), 460px);
                display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px;
-               background: rgba(18, 17, 20, .94); border-radius: 26px;
-               box-shadow: 0 18px 40px -14px rgba(0,0,0,.55);
-               -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+               background: #141316; border-radius: 26px;
+               box-shadow: 0 18px 40px -14px rgba(0,0,0,.55); }
   .fasce-bar button { border: 0; background: transparent; color: rgba(255,255,255,.62); border-radius: 20px;
                       padding: 11px 2px 10px; font-size: 12.5px; font-weight: 600; white-space: nowrap;
                       display: flex; flex-direction: column; align-items: center; gap: 4px;
