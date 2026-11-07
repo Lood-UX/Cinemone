@@ -1,0 +1,48 @@
+name: Aggiorna orari
+
+on:
+  schedule:
+    # Orari in UTC: 07:00 e 13:00 UTC = 08:00/14:00 ora solare italiana (09:00/15:00 in estate)
+    - cron: "0 7 * * *"
+    - cron: "0 13 * * *"
+  workflow_dispatch: {}      # pulsante "Run workflow" per aggiornare a mano
+  push:
+    branches: [main]         # si rigenera anche quando modifichi config.yml
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Rome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+      - name: Genera la pagina
+        run: ruby build.rb
+        env:
+          TMDB_TOKEN: ${{ secrets.TMDB_TOKEN }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

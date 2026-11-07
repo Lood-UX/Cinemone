@@ -1,0 +1,19 @@
+# ─────────────────────────────────────────────────────────────
+#  Correzioni manuali per l'abbinamento con TMDB.
+#  Usale solo quando un film viene abbinato male o non viene trovato.
+#
+#  La chiave è il titolo come lo scrive il cinema (maiuscole e
+#  punteggiatura non contano). Valori possibili:
+#
+#    tmdb_id: 12345            → forza l'abbinamento a quel film TMDB
+#                                (l'id è il numero nell'indirizzo
+#                                 themoviedb.org/movie/12345-...)
+#    generi: [Dramma, Storia]  → imposta i generi a mano
+#    titolo: "Titolo giusto"   → nome da mostrare nella pagina
+#    origine: italiano         → forza la sezione (italiano / straniero)
+#
+#  Esempio:
+#  "SHAUN, VITA DA PECORA operazione Z.U.C.C.A.":
+#    tmdb_id: 123456
+# ─────────────────────────────────────────────────────────────
+{}

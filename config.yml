@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────────
+#  Configurazione "Orari cinema"
+#  Modifica questo file per cambiare generi, fasce e preferenze.
+#  Dopo il salvataggio su GitHub la pagina si rigenera da sola.
+# ─────────────────────────────────────────────────────────────
+
+# Generi che ti interessano (nomi di TMDB in italiano).
+# Disponibili: Azione, Avventura, Animazione, Commedia, Crime, Documentario,
+# Dramma, Famiglia, Fantasy, Storia, Horror, Musica, Mistero, Romance,
+# Fantascienza, Thriller, Guerra, Western
+generi_preferiti:
+  - Commedia
+  - Documentario
+  - Dramma
+  - Famiglia
+  - Storia
+  - Musica
+  - Romance
+
+# Generi da escludere sempre, anche se il film ha anche un genere preferito.
+generi_esclusi:
+  - Horror
+  - Animazione
+  - Crime
+  - Thriller
+
+# Mostrare in fondo alla pagina (chiusa) la sezione con i film degli altri generi?
+mostra_altri_film: false
+
+# Titoli da mostrare sempre (anche se non sono dei tuoi generi).
+film_sempre: []
+
+# Titoli da non mostrare mai.
+film_mai: []
+
+# Orari della cena, usati per dividere gli spettacoli in fasce.
+cena:
+  # 🍿 "Prima di cena": il film FINISCE entro questo orario
+  prima_di_cena_finisce_entro: "20:45"
+  # 🍝 "Dopo cena": il film INIZIA da questo orario in poi
+  dopo_cena_inizia_da: "21:30"
+  # Tutto quello che sta in mezzo è ⚠️ "A cavallo della cena"
+
+# Minuti di pubblicità/trailer prima del film (per stimare l'orario di fine).
+pubblicita_minuti: 15
+
+# Durata usata quando non si conosce quella vera del film.
+durata_predefinita: 120
+
+# Quanti giorni mostrare (oggi compreso).
+giorni: 7

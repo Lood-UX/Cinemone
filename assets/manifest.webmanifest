@@ -1,0 +1,16 @@
+{
+  "name": "Cinemone",
+  "short_name": "Cinemone",
+  "description": "Gli orari dei tuoi cinema, divisi per prima e dopo cena.",
+  "lang": "it",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f3f0",
+  "theme_color": "#ffd9c2",
+  "icons": [
+    { "src": "icona-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icona-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icona.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
