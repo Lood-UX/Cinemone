@@ -2,9 +2,14 @@ name: Aggiorna orari
 
 on:
   schedule:
-    # Orari in UTC: 07:00 e 13:00 UTC = 08:00/14:00 ora solare italiana (09:00/15:00 in estate)
-    - cron: "0 7 * * *"
-    - cron: "0 13 * * *"
+    # Orari in UTC (ora italiana = UTC+1 d'inverno, +2 d'estate).
+    # Minuti "dispari": GitHub ritarda molto le esecuzioni programmate allo scoccare dell'ora.
+    # Più esecuzioni al giorno, così almeno una arriva presto la mattina anche se GitHub è in ritardo.
+    - cron: "23 3 * * *"     # ~04:23 notte: orari del nuovo giorno
+    - cron: "41 6 * * *"     # ~07:41 mattina
+    - cron: "17 10 * * *"    # ~11:17
+    - cron: "37 14 * * *"    # ~15:37
+    - cron: "53 18 * * *"    # ~19:53
   workflow_dispatch: {}      # pulsante "Run workflow" per aggiornare a mano
   push:
     branches: [main]         # si rigenera anche quando modifichi config.yml
