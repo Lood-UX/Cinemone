@@ -38,7 +38,7 @@
   html { -webkit-text-size-adjust: 100%; background: var(--notte); }
   body { margin: 0; min-height: 100vh; background: transparent; color: var(--testo); /* il colore pieno sta su html, così lo sfondo sfumato resta visibile */
          font: 15px/1.45 var(--font); -webkit-font-smoothing: antialiased;
-         padding-bottom: calc(env(safe-area-inset-bottom) + 104px); }
+         padding-bottom: calc(max(12px, env(safe-area-inset-bottom) - 10px) + 96px); }
   button { font: inherit; color: inherit; cursor: pointer; }
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; border-radius: 12px; }
@@ -80,8 +80,14 @@
   .aree button[aria-selected="true"] .n { background: rgba(7, 13, 36, .4); color: var(--sel-chiaro); }
 
   /* Barra giorni (pillole) */
-  .barra { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top);
+  /* Nell'app aperta dalla Home la barra di stato è sopra la pagina: la barra dei giorni si ferma
+     subito sotto (top) invece di aggiungere altro spazio (prima lo spazio veniva contato due volte). */
+  .barra { position: sticky; top: env(safe-area-inset-top); z-index: 20;
            transition: background .25s, box-shadow .25s; }
+  /* Copre la zona della barra di stato quando scorri, così i contenuti non ci passano sotto */
+  .tappo-stato { position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top); z-index: 21;
+                 background: rgba(9, 15, 40, .97); opacity: 0; transition: opacity .25s; pointer-events: none; }
+  .tappo-stato.visibile { opacity: 1; }
   /* Niente backdrop-filter: su iPhone ricalcola la sfocatura a ogni frame di scorrimento */
   .barra.ombra { background: rgba(9, 15, 40, .97); box-shadow: 0 1px 0 var(--linea); }
   .giorni { max-width: 560px; margin: 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
@@ -258,7 +264,8 @@
 
   /* Barra flottante delle fasce */
   .fasce-bar { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%);
-               bottom: calc(env(safe-area-inset-bottom) + 14px); width: min(calc(100% - 28px), 460px);
+               /* Come nelle app iOS: la barra sta appena sopra la lineetta della Home, senza margine in più */
+               bottom: max(12px, calc(env(safe-area-inset-bottom) - 10px)); width: min(calc(100% - 28px), 460px);
                display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px;
                background: #0d1638; border-radius: 26px;
                box-shadow: 0 18px 40px -14px rgba(0,0,0,.8), inset 0 0 0 1px rgba(233, 191, 98, .22); }
@@ -284,6 +291,7 @@
 </head>
 <body>
 <div class="atmosfera" aria-hidden="true"></div>
+<div class="tappo-stato" id="tappo-stato" aria-hidden="true"></div>
 
 <header class="testata">
   <div class="marchio"><img src="<%= logo_data_uri %>" alt=""><span><b>OneScreen</b><small>Tutto il tuo cinema in un unico schermo 🍿</small></span></div>
@@ -415,6 +423,7 @@
   var filtri = document.querySelectorAll('.fasce-bar button');
   var aree = document.querySelectorAll('.aree button');
   var barra = document.getElementById('barra');
+  var tappo = document.getElementById('tappo-stato');
   var foglio = document.getElementById('foglio');
   var pannello = document.getElementById('pannello');
   var contenuto = document.getElementById('contenuto');
@@ -592,7 +601,9 @@
   });
 
   window.addEventListener('scroll', function () {
-    barra.classList.toggle('ombra', window.scrollY > 60);
+    var scorso = window.scrollY > 60;
+    barra.classList.toggle('ombra', scorso);
+    tappo.classList.toggle('visibile', scorso);
   }, { passive: true });
 
   /* ---------- Spettacoli già iniziati ---------- */
