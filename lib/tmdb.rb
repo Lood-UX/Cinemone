@@ -54,7 +54,8 @@ class Tmdb
   private
 
   def ricerca(query)
-    q = query.to_s.sub(/\s*[-–]\s*(lingua originale|evento).*\z/i, '').strip
+    # Via le parentesi (es. "(O.V.)", "(Re-Release)") e i suffissi tipo "- Lingua originale"
+    q = query.to_s.gsub(/\([^)]*\)/, ' ').sub(/\s*[-–]\s*(lingua originale|evento).*\z/i, '').squeeze(' ').strip
     return [] if q.empty?
 
     chiama('/search/movie', query: q, language: 'it-IT', region: 'IT', include_adult: 'false')['results'] || []
