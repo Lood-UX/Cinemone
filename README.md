@@ -1,4 +1,4 @@
-# 🎬 Orari cinema
+# 🎬 OneScreen
 
 Pagina personale con gli orari di quattro cinema dell'area di Pescara,
 filtrati per genere e divisi in fasce rispetto alla cena:

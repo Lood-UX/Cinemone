@@ -3,7 +3,7 @@ require_relative 'util'
 # Ricerca dei film su TMDB per ottenere generi, durata, locandina e trama.
 class Tmdb
   API = 'https://api.themoviedb.org/3'
-  IMG = 'https://image.tmdb.org/t/p/w780'
+  IMG = 'https://image.tmdb.org/t/p/w500'
 
   attr_reader :errori
 

@@ -105,25 +105,28 @@ class Pagina
     end.compact.join
 
     poster = film[:locandina]
-    stile = poster ? %( style="--poster:url('#{h(poster)}')") : ''
+    # Per lo sfondo sfocato basta una versione minuscola della locandina (TMDB w92).
+    piccola = poster.to_s.sub(%r{/t/p/w\d+/}, '/t/p/w92/')
+    stile = poster ? %( style="--poster:url('#{h(poster)}');--poster-piccola:url('#{h(piccola)}')") : ''
     immagine = if poster
-                 %(<img class="locandina" src="#{h(poster)}" alt="" loading="lazy">)
+                 %(<img class="locandina" src="#{h(poster)}" alt="" loading="lazy" decoding="async">)
                else
                  %(<div class="locandina vuota" aria-hidden="true">#{h(film[:titolo].to_s[0])}</div>)
                end
 
     origine = { italiano: '🇮🇹 Italiano', straniero: '🌍 Straniero' }[film[:origine]]
     chip_origine = origine ? %(<span class="chip sx">#{origine}</span>) : ''
-    chip_voto = film[:voto] ? %(<span class="chip dx">★ #{h(film[:voto])}</span>) : ''
+    chip_voto = '' # il voto sta nella riga dei dettagli: in alto a destra c'è il pulsante di chiusura
     generi = film[:generi].first(3).map { |g| h(g) }.join(' · ')
-    meta = [generi, durata(film[:durata])].compact.reject(&:empty?).join('<span class="punto">·</span>')
+    meta = [generi, durata(film[:durata]), film[:voto] ? "★ #{h(film[:voto])}" : nil]
+           .compact.reject(&:empty?).join('<span class="punto">·</span>')
     titolo = film[:tmdb_url] ? %(<a href="#{h(film[:tmdb_url])}" target="_blank" rel="noopener">#{h(film[:titolo])}</a>) : h(film[:titolo])
 
     trama = film[:trama].to_s.strip
     blocco_trama = if trama.empty?
                      ''
                    elsif trama.length > 200
-                     %(<div class="vetro trama"><p>#{h(trama)}</p><button type="button" class="altro">Leggi tutto</button></div>)
+                     %(<div class="vetro trama"><p>#{h(trama)}</p><button type="button" class="altro" aria-expanded="false"><span class="apri">Leggi tutto</span><span class="riduci">Riduci</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>)
                    else
                      %(<div class="vetro trama corta"><p>#{h(trama)}</p></div>)
                    end
@@ -140,6 +143,54 @@ class Pagina
         <div class="vetro spettacoli">#{fasce}</div>
       </article>
     HTML
+  end
+
+  def numero_spettacoli(film, data)
+    film[:spettacoli].count { |s| s[:data] == data }
+  end
+
+  # Identificativo del dettaglio di un film in un giorno (usato dalla panoramica).
+  def id_dettaglio(film, indice_giorno)
+    "d#{indice_giorno}-#{film[:chiave].to_s.tr(' ', '-')[0, 60]}"
+  end
+
+  # Card piccola della panoramica: locandina, titolo e le fasce in cui c'è uno spettacolo.
+  def tessera(film, data, indice_giorno)
+    lista = film[:spettacoli].select { |s| s[:data] == data }
+    fasce = lista.map { |s| s[:fascia] }.uniq
+    poster = film[:locandina].to_s.sub(%r{/t/p/w\d+/}, '/t/p/w342/')
+    immagine = if film[:locandina]
+                 %(<img src="#{h(poster)}" alt="" loading="lazy" decoding="async">)
+               else
+                 %(<span class="t-vuota" aria-hidden="true">#{h(film[:titolo].to_s[0])}</span>)
+               end
+    bandiera = { italiano: '🇮🇹', straniero: '🌍' }[film[:origine]]
+    icone = Catalogo::FASCE.map do |fascia, icona, nome|
+      %(<i class="#{fasce.include?(fascia) ? 'on' : ''}" title="#{h(nome)}">#{icona}</i>)
+    end.join
+    ultimo = lista.map { |s| istante(s) }.max
+    orari = lista.size == 1 ? '1 orario' : "#{lista.size} orari"
+    meta = [durata(film[:durata]), orari].compact.join(' · ')
+
+    <<~HTML
+      <button type="button" class="tessera" data-apri="#{id_dettaglio(film, indice_giorno)}"
+              data-origine="#{film[:origine]}" data-fasce="#{fasce.join(' ')}" data-ultimo="#{ultimo}"
+              aria-label="#{h(film[:titolo])}: vedi trama e orari">
+        #{immagine}
+        <span class="velo-t" aria-hidden="true"></span>
+        #{bandiera ? %(<span class="bandiera">#{bandiera}</span>) : ''}
+        <span class="info">
+          <span class="t-titolo">#{h(film[:titolo])}</span>
+          <span class="t-meta">#{h(meta)}</span>
+          <span class="t-fasce">#{icone}</span>
+        </span>
+      </button>
+    HTML
+  end
+
+  # Il dettaglio sta in un <template>: non viene disegnato né scarica immagini finché non lo apri.
+  def dettaglio(film, data, indice_giorno)
+    %(<template id="#{id_dettaglio(film, indice_giorno)}">#{scheda(film, data)}</template>)
   end
 
   def pulsante(s)

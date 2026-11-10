@@ -47,5 +47,7 @@ pubblicita_minuti: 15
 # Durata usata quando non si conosce quella vera del film.
 durata_predefinita: 120
 
-# Quanti giorni mostrare (oggi compreso).
-giorni: 7
+# Quanti giorni leggere (oggi compreso). 8 = un giorno in più, così anche se
+# la pagina è stata generata la sera prima ne restano sempre 7 da oggi in poi.
+# La pagina ne mostra al massimo 7.
+giorni: 8

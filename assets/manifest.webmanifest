@@ -1,13 +1,13 @@
 {
-  "name": "Cinemone",
-  "short_name": "Cinemone",
-  "description": "Gli orari dei tuoi cinema, divisi per prima e dopo cena.",
+  "name": "OneScreen",
+  "short_name": "OneScreen",
+  "description": "Tutto il tuo cinema in un unico schermo 🍿",
   "lang": "it",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8f3f0",
-  "theme_color": "#ffd9c2",
+  "background_color": "#070d24",
+  "theme_color": "#0b1433",
   "icons": [
     { "src": "icona-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icona-512.png", "sizes": "512x512", "type": "image/png" },

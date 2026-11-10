@@ -3,83 +3,99 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#ffd9c2">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b1433">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Cinemone">
-<meta name="application-name" content="Cinemone">
-<title>Cinemone</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OneScreen">
+<meta name="application-name" content="OneScreen">
+<title>OneScreen</title>
 <link rel="icon" type="image/svg+xml" href="icona.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="description" content="Tutto il tuo cinema in un unico schermo 🍿">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&display=swap">
 <style>
-  /* Reference: app Inviti di iPhone + dashboard pastello (Pinterest) */
+  /* OneScreen — blu notte e oro, gradienti mesh */
   :root {
-    --ink: #121114; --muted: #6f6870; --paper: #f8f3f0;
-    --prima: #8ef0bf; --cavallo: #ffd978; --dopo: #ffb197;
+    --notte: #070d24; --notte-2: #0b1433; --notte-3: #131f4d; --indaco: #2a3f9a; --viola: #43277e;
+    --oro: #e9bf62; --oro-chiaro: #f8e2a6; --oro-scuro: #b9842f;
+    --testo: #f4ecd9; --muted: #a4a9c6; --linea: rgba(233, 191, 98, .18);
+    --vetro: rgba(255, 255, 255, .07); --vetro-forte: rgba(255, 255, 255, .12);
+    --gradiente-oro: linear-gradient(135deg, #fff0c2 0%, #e9bf62 48%, #c18c34 100%);
+    /* Pulsanti selezionati: il blu più acceso del logo (#3A52A8), schiarito in alto, con un alone */
+    --sel: #3a52a8; --sel-chiaro: #e3e9ff; --champagne: #c9a76a;
+    --gradiente-sel: linear-gradient(160deg, #6580e6 0%, #4862c4 45%, #3a52a8 100%);
+    --ombra-sel: 0 8px 24px -8px rgba(72, 98, 196, .85), inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 0 0 1px rgba(255, 255, 255, .14);
     --gutter: 18px;
-    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
+    --crema: #f6e6c4;
+    --font: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; min-height: 100vh; background: var(--paper); color: var(--ink);
+  html { -webkit-text-size-adjust: 100%; background: var(--notte); }
+  body { margin: 0; min-height: 100vh; background: transparent; color: var(--testo); /* il colore pieno sta su html, così lo sfondo sfumato resta visibile */
          font: 15px/1.45 var(--font); -webkit-font-smoothing: antialiased;
          padding-bottom: calc(env(safe-area-inset-bottom) + 104px); }
   button { font: inherit; color: inherit; cursor: pointer; }
   a { color: inherit; }
-  :focus-visible { outline: 3px solid #ff7e5f; outline-offset: 3px; border-radius: 12px; }
+  :focus-visible { outline: 3px solid var(--oro); outline-offset: 3px; border-radius: 12px; }
 
-  /* Sfondo caldo in alto, come nella reference pastello */
-  .atmosfera { position: absolute; inset: 0 0 auto 0; height: 620px; z-index: -1; pointer-events: none;
+/* Blu notte con un velo di blu reale in alto e una luce champagne tenue dal basso, come lo schermo in sala */
+  .atmosfera { position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background:
-      radial-gradient(90% 70% at 0% 0%, #ffbf87 0%, rgba(255,191,135,0) 70%),
-      radial-gradient(80% 60% at 100% 8%, #ff9cc6 0%, rgba(255,156,198,0) 70%),
-      radial-gradient(70% 50% at 60% 40%, #ffd9e8 0%, rgba(255,217,232,0) 70%),
-      linear-gradient(180deg, #ffe6d6 0%, var(--paper) 100%); }
+      radial-gradient(90% 55% at 12% -8%, rgba(43, 66, 148, .9) 0%, rgba(43, 66, 148, 0) 70%),
+      radial-gradient(70% 45% at 108% 18%, rgba(201, 167, 106, .3) 0%, rgba(201, 167, 106, 0) 70%),
+      radial-gradient(65% 40% at -12% 62%, rgba(37, 58, 132, .6) 0%, rgba(37, 58, 132, 0) 70%),
+      radial-gradient(120% 55% at 50% 112%, rgba(214, 178, 112, .45) 0%, rgba(214, 178, 112, 0) 66%),
+      linear-gradient(180deg, #101b45 0%, #0a1130 50%, #0e1332 100%); }
 
   /* Testata */
   .testata { max-width: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
              padding: calc(env(safe-area-inset-top) + 18px) var(--gutter) 4px; }
-  .marchio { display: flex; align-items: center; gap: 10px; }
-  .marchio img { width: 40px; height: 40px; border-radius: 11px;
-                 box-shadow: 0 8px 16px -8px rgba(200, 50, 90, .6), 0 0 0 1px rgba(255,255,255,.6); }
-  .marchio b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -.6px; line-height: 1.05; }
-  .marchio small { display: block; font-size: 11.5px; font-weight: 500; color: var(--muted); }
-  .aggiornato { background: rgba(255,255,255,.75); border-radius: 999px; padding: 6px 12px; font-size: 12px;
-                font-weight: 600; color: var(--muted); box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+  .marchio { display: flex; align-items: center; gap: 11px; }
+  .marchio img { width: 42px; height: 42px; border-radius: 12px;
+                 box-shadow: 0 10px 22px -10px rgba(233, 191, 98, .55), 0 0 0 1px rgba(233, 191, 98, .35); }
+  .marchio b { display: block; font-size: 22px; font-weight: 650; letter-spacing: -.5px; line-height: 1.05; color: var(--crema); }
+  .marchio small { display: block; margin-top: 2px; font-size: 11px; font-weight: 400; color: var(--muted);
+                   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aggiornato { flex: 0 0 auto; white-space: nowrap; background: var(--vetro); border: 1px solid var(--linea);
+                border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .marchio { min-width: 0; }
 
-  /* Due aree: cinema italiano / straniero (segmentato stile iOS) */
+  /* Due aree: cinema italiano / straniero */
   .aree { max-width: calc(560px - 2 * var(--gutter)); margin: 10px auto 0; display: grid; grid-template-columns: 1fr 1fr;
-          gap: 4px; padding: 4px; border-radius: 20px; background: rgba(255,255,255,.45);
-          border: 1px solid rgba(255,255,255,.75); width: calc(100% - 2 * var(--gutter)); }
+          gap: 4px; padding: 4px; border-radius: 20px; background: var(--vetro);
+          border: 1px solid var(--linea); width: calc(100% - 2 * var(--gutter)); }
   .aree button { border: 0; background: transparent; border-radius: 16px; padding: 11px 6px;
                  font-size: 15px; font-weight: 700; letter-spacing: -.3px; color: var(--muted);
                  display: flex; align-items: center; justify-content: center; gap: 7px;
                  transition: background .25s, color .25s, box-shadow .25s; }
   .aree button .n { font-size: 11px; font-weight: 700; min-width: 20px; padding: 2px 7px; border-radius: 999px;
-                    background: rgba(0,0,0,.07); letter-spacing: 0; }
-  .aree button[aria-selected="true"] { background: #fff; color: var(--ink);
-                                       box-shadow: 0 6px 16px -8px rgba(120, 40, 60, .35), 0 1px 2px rgba(0,0,0,.06); }
-  .aree button[aria-selected="true"] .n { background: var(--ink); color: #fff; }
+                    background: rgba(255,255,255,.08); letter-spacing: 0; }
+  .aree button[aria-selected="true"] { background: var(--gradiente-sel); color: #fff;
+                                       box-shadow: var(--ombra-sel); }
+  .aree button[aria-selected="true"] .n { background: rgba(7, 13, 36, .4); color: var(--sel-chiaro); }
 
   /* Barra giorni (pillole) */
   .barra { position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top);
            transition: background .25s, box-shadow .25s; }
   /* Niente backdrop-filter: su iPhone ricalcola la sfocatura a ogni frame di scorrimento */
-  .barra.ombra { background: rgba(255, 238, 231, .97); box-shadow: 0 1px 0 rgba(0,0,0,.06); }
+  .barra.ombra { background: rgba(9, 15, 40, .97); box-shadow: 0 1px 0 var(--linea); }
   .giorni { max-width: 560px; margin: 0 auto; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
             padding: 12px var(--gutter); scroll-padding-inline: var(--gutter); }
   .giorni::-webkit-scrollbar { display: none; }
   .giorno-btn { flex: 0 0 auto; min-width: 54px; height: 58px; border-radius: 29px; padding: 0 12px;
                 display: flex; flex-direction: column; align-items: center; justify-content: center;
-                border: 1px solid rgba(255,255,255,.8); background: rgba(255,255,255,.55);
+                border: 1px solid rgba(255,255,255,.1); background: var(--vetro);
                 transition: background .25s, color .25s, min-width .25s, transform .15s; }
   .giorno-btn .gn { font-size: 18px; font-weight: 600; line-height: 1.1; letter-spacing: -.3px; }
   .giorno-btn .gs { font-size: 11px; color: var(--muted); font-weight: 500; }
-  .giorno-btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; min-width: 78px; }
-  .giorno-btn[aria-pressed="true"] .gs { color: rgba(255,255,255,.7); }
+  .giorno-btn[aria-pressed="true"] { background: var(--gradiente-sel); border-color: transparent; color: #fff;
+                                     min-width: 78px; box-shadow: var(--ombra-sel); }
+  .giorno-btn[aria-pressed="true"] .gs { color: rgba(255, 255, 255, .8); font-weight: 600; }
   .giorno-btn:active { transform: scale(.94); }
 
   /* Contenuto */
@@ -89,68 +105,127 @@
   @keyframes entra { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
   .titolo-giorno { margin: 10px 0 6px; }
-  .titolo-giorno .sopra { font-size: 15px; font-weight: 600; color: var(--muted); }
+  .titolo-giorno .sopra { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--oro); }
   /* Data su una riga: la dimensione si adatta alla lunghezza ("Mercoledì 11 novembre" è più lungo) */
   .titolo-giorno h1 { font-size: min(38px, calc((min(100vw, 560px) - 2 * var(--gutter)) / (var(--len) * .56)));
-                      line-height: 1.05; letter-spacing: -.04em; font-weight: 800; margin: 2px 0 0; white-space: nowrap; }
+                      line-height: 1.05; letter-spacing: -.035em; font-weight: 700; margin: 4px 0 0; white-space: nowrap; }
 
   .sezione { display: flex; align-items: center; gap: 8px; font-size: 21px; font-weight: 700;
              letter-spacing: -.5px; margin: 28px 0 14px; }
-  .sezione .conta { font-size: 12px; font-weight: 700; background: var(--ink); color: #fff;
+  .sezione .conta { font-size: 12px; font-weight: 700; background: var(--gradiente-sel); color: #fff;
                     border-radius: 999px; padding: 2px 9px; letter-spacing: 0; }
 
-  /* Scheda film — stile app Inviti */
-  /* content-visibility: le schede fuori schermo non vengono disegnate finché non ci arrivi */
-  .film { position: relative; isolation: isolate; overflow: hidden; color: #fff; background: #3a2a33;
+  /* Panoramica: sempre due locandine affiancate, la misura giusta per il telefono */
+  .griglia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+  .tessera { position: relative; display: block; width: 100%; aspect-ratio: 2 / 3; padding: 0; border: 0;
+             border-radius: 22px; overflow: hidden; background: linear-gradient(160deg, var(--indaco), var(--notte-2) 70%);
+             color: #fff; text-align: left; cursor: pointer;
+             box-shadow: 0 18px 30px -18px rgba(0, 0, 0, .8), 0 0 0 1px rgba(233, 191, 98, .14);
+             transition: transform .2s cubic-bezier(.2,.8,.2,1), opacity .25s; -webkit-tap-highlight-color: transparent; }
+  .tessera:active { transform: scale(.96); }
+  .tessera img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .t-vuota { position: absolute; inset: 0; display: grid; place-items: center; font-size: 56px; font-weight: 200;
+             color: rgba(233, 191, 98, .45); }
+  .velo-t { position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(7,13,36,0) 38%, rgba(7,13,36,.45) 62%, rgba(7,13,36,.94) 100%); }
+  .bandiera { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; border-radius: 50%;
+              display: grid; place-items: center; font-size: 15px; background: rgba(7, 13, 36, .55);
+              border: 1px solid rgba(233, 191, 98, .3); }
+  .info { position: absolute; left: 12px; right: 12px; bottom: 12px; display: block; }
+  .t-titolo { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+              font-size: 17px; font-weight: 800; line-height: 1.08; letter-spacing: -.4px;
+              text-shadow: 0 1px 12px rgba(0,0,0,.5); }
+  .t-meta { display: block; margin-top: 4px; font-size: 11.5px; font-weight: 500; color: rgba(244, 236, 217, .75); }
+  .t-fasce { display: flex; gap: 5px; margin-top: 9px; }
+  .t-fasce i { font-style: normal; width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center;
+               font-size: 13px; background: rgba(255,255,255,.1); opacity: .3; filter: grayscale(1); }
+  .t-fasce i.on { opacity: 1; filter: none; background: rgba(233, 191, 98, .22); box-shadow: inset 0 0 0 1px rgba(233,191,98,.45); }
+  .tessera.finito { opacity: .4; }
+
+  /* Pannello di dettaglio dal basso */
+  .foglio { position: fixed; inset: 0; z-index: 50; visibility: hidden; pointer-events: none; }
+  .foglio.aperto { visibility: visible; pointer-events: auto; }
+  .foglio .velo { position: absolute; inset: 0; background: rgba(3, 6, 18, .65); opacity: 0; transition: opacity .3s; }
+  .foglio.aperto .velo { opacity: 1; }
+  .pannello { position: absolute; left: 0; right: 0; bottom: 0; max-width: 560px; margin: 0 auto;
+              max-height: calc(100% - env(safe-area-inset-top) - 18px); overflow-y: auto;
+              -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+              border-radius: 30px 30px 0 0; background: var(--notte-2);
+              box-shadow: 0 -1px 0 rgba(233, 191, 98, .35);
+              transform: translateY(100%); transition: transform .4s cubic-bezier(.2,.85,.25,1); }
+  .foglio.aperto .pannello { transform: none; }
+  .pannello:focus { outline: none; }
+  .pannello.trascina { transition: none; }
+  .testa-foglio { position: sticky; top: 0; height: 0; z-index: 5; }
+  .maniglia { position: absolute; top: 8px; left: 50%; width: 40px; height: 5px; margin-left: -20px;
+              border-radius: 3px; background: rgba(248, 226, 166, .7); }
+  .chiudi { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0;
+            display: grid; place-items: center; color: var(--oro-chiaro); background: rgba(7, 13, 36, .6);
+            box-shadow: inset 0 0 0 1px rgba(233, 191, 98, .35); }
+  .chiudi svg { width: 14px; height: 14px; }
+  .contenuto .film { margin: 0; border-radius: 30px 30px 0 0; box-shadow: none; content-visibility: visible;
+                     padding-bottom: calc(env(safe-area-inset-bottom) + 28px); min-height: 60vh; }
+  body.bloccato { overflow: hidden; }
+
+  /* Scheda del film: sfondo dai colori del poster, velato di blu notte */
+  .film { position: relative; isolation: isolate; overflow: hidden; color: #fff; background: var(--notte-2);
           border-radius: 32px; margin-bottom: 22px; padding-bottom: 14px;
           content-visibility: auto; contain-intrinsic-size: auto 820px;
-          box-shadow: 0 24px 40px -28px rgba(70, 20, 40, .6); }
+          box-shadow: 0 24px 40px -28px rgba(0, 0, 0, .8); }
   .sfondo { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
   /* Sfondo sfocato da una locandina piccola: stesso effetto, molto meno lavoro */
   .sfondo::before { content: ""; position: absolute; inset: -40px;
                     background: var(--poster-piccola, var(--poster)) center 30% / cover;
-                    filter: blur(26px) saturate(1.8) brightness(.6); transform: translateZ(0) scale(1.1); }
+                    filter: blur(26px) saturate(1.5) brightness(.5); transform: translateZ(0) scale(1.1); }
   .sfondo::after { content: ""; position: absolute; inset: 0;
-                   background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.22) 100%); }
-  .senza-poster { background: linear-gradient(160deg, #6d4a7a, #2b2236 70%); }
+                   background:
+                     radial-gradient(80% 40% at 50% 100%, rgba(233, 191, 98, .14) 0%, rgba(233, 191, 98, 0) 70%),
+                     linear-gradient(180deg, rgba(11, 20, 51, .15) 20%, rgba(11, 20, 51, .75) 100%); }
+  .senza-poster { background: linear-gradient(160deg, var(--indaco), var(--notte-2) 70%); }
 
   .copertina { position: relative; }
   .locandina { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 22%;
                -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
                mask-image: linear-gradient(180deg, #000 55%, transparent 98%); }
   .locandina.vuota { aspect-ratio: auto; height: 170px; display: grid; place-items: center;
-                     font-size: 64px; font-weight: 200; color: rgba(255,255,255,.35); }
+                     font-size: 64px; font-weight: 200; color: rgba(233, 191, 98, .45); }
   .chip { position: absolute; top: 16px; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 999px;
-          background: rgba(20, 16, 20, .5); border: 1px solid rgba(255,255,255,.18); }
+          background: rgba(7, 13, 36, .6); border: 1px solid rgba(233, 191, 98, .35); color: var(--oro-chiaro); }
   .chip.sx { left: 16px; }
   .chip.dx { right: 16px; }
 
   .intestazione { position: relative; text-align: center; padding: 0 22px; margin-top: -96px; }
   .senza-poster .intestazione { margin-top: -40px; }
   .film h3 { margin: 0; font-size: 31px; line-height: 1.04; font-weight: 800; letter-spacing: -.9px;
-             text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+             text-shadow: 0 2px 24px rgba(0,0,0,.45); }
   .film h3 a { text-decoration: none; }
-  .meta { margin-top: 8px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,.82); }
+  .meta { margin-top: 8px; font-size: 14px; font-weight: 500; color: rgba(248, 226, 166, .85); }
   .punto { margin: 0 7px; opacity: .6; }
 
   .vetro { margin: 14px 14px 0; padding: 14px 16px; border-radius: 22px;
-           background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.14); }
+           background: rgba(255,255,255,.07); border: 1px solid rgba(233, 191, 98, .16); }
   .trama { text-align: center; }
-  .trama p { margin: 0; font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.92);
+  .trama p { margin: 0; font-size: 14.5px; line-height: 1.5; color: rgba(244, 236, 217, .92);
              display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
   .trama.aperta p { display: block; -webkit-line-clamp: unset; }
-  .altro { margin-top: 8px; border: 0; background: rgba(255,255,255,.18); color: #fff; font-size: 13px;
-           font-weight: 600; padding: 6px 14px; border-radius: 999px; }
-  .trama.aperta .altro { display: none; }
+  .altro { margin-top: 10px; border: 0; background: rgba(133, 144, 240, .2); color: var(--sel-chiaro); font-size: 13px;
+           font-weight: 600; padding: 7px 12px 7px 15px; border-radius: 999px;
+           display: inline-flex; align-items: center; gap: 6px; box-shadow: inset 0 0 0 1px rgba(133,144,240,.45); }
+  .altro svg { width: 14px; height: 14px; transition: transform .25s; }
+  .altro .riduci { display: none; }
+  .trama.aperta .altro .apri { display: none; }
+  .trama.aperta .altro .riduci { display: inline; }
+  .trama.aperta .altro svg { transform: rotate(180deg); }
 
   .fascia + .fascia { margin-top: 16px; }
   .fascia-nome { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;
-                 letter-spacing: .1px; margin-bottom: 10px; color: rgba(255,255,255,.95); }
+                 letter-spacing: .1px; margin-bottom: 10px; color: var(--testo); }
   .fascia-nome .emoji { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
-                        font-size: 15px; background: rgba(255,255,255,.16); }
+                        font-size: 15px; background: rgba(233, 191, 98, .14); }
   .orari { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .orario { position: relative; display: flex; flex-direction: column; padding: 10px 11px 10px; border-radius: 18px;
-            text-decoration: none; color: #fff; background: rgba(255,255,255,.14); line-height: 1.2;
+            text-decoration: none; color: var(--testo); background: rgba(255,255,255,.08);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); line-height: 1.2;
             transition: transform .15s, opacity .25s, background .2s; }
   .orario:active { transform: scale(.95); }
   .orario .ora { font-size: 21px; font-weight: 700; letter-spacing: -.6px; font-variant-numeric: tabular-nums; }
@@ -159,51 +234,50 @@
                          background: var(--c); margin-right: 6px; vertical-align: 1px; }
   .orario .fine { font-size: 11px; opacity: .7; margin-top: 1px; }
   .orario .tag { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; margin-top: 4px; opacity: .85; }
-  .freccia { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 50%;
-             display: grid; place-items: center; background: rgba(255,255,255,.22); }
-  .freccia svg { width: 12px; height: 12px; }
-  /* "Dopo cena" in evidenza, come il pulsante attivo nell'app Inviti */
-  .orario.dopo { background: #fff; color: var(--ink); box-shadow: 0 8px 18px -10px rgba(0,0,0,.5); }
-  .orario.dopo .cin::before { box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
-  .orario.dopo .freccia { background: var(--ink); color: #fff; }
-  .orario.passato { opacity: .32; }
+  /* "Dopo cena" in evidenza: biglietto dorato */
+  .orario.dopo { background: var(--gradiente-sel); color: #fff; box-shadow: var(--ombra-sel); }
+  .orario.dopo .cin::before { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .6); }
+  .orario.passato { opacity: .3; }
   .orario.esaurito { opacity: .5; }
   .orario.esaurito .ora { text-decoration: line-through; }
   .nascosto { display: none !important; }
 
-  .vuoto-msg { background: rgba(255,255,255,.7); border-radius: 24px; padding: 22px; text-align: center;
-               color: var(--muted); font-weight: 500; margin-top: 18px; }
+  .vuoto-msg { background: var(--vetro); border: 1px solid var(--linea); border-radius: 24px; padding: 22px;
+               text-align: center; color: var(--muted); font-weight: 500; margin-top: 18px; }
   details.altri { margin-top: 26px; }
   details.altri > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px;
                             font-size: 17px; font-weight: 700; letter-spacing: -.3px; padding: 4px 0 14px; color: var(--muted); }
   details.altri > summary::-webkit-details-marker { display: none; }
-  details.altri > summary .conta { font-size: 12px; background: rgba(0,0,0,.08); color: var(--muted);
+  details.altri > summary .conta { font-size: 12px; background: rgba(255,255,255,.08); color: var(--muted);
                                    border-radius: 999px; padding: 2px 9px; }
   details.altri > summary::after { content: "+"; margin-left: auto; width: 30px; height: 30px; border-radius: 50%;
-                                   display: grid; place-items: center; background: #fff; font-weight: 400; color: var(--ink); }
+                                   display: grid; place-items: center; background: var(--vetro-forte);
+                                   font-weight: 400; color: var(--oro-chiaro); }
   details.altri[open] > summary::after { content: "–"; }
   .nota { font-size: 13px; color: var(--muted); margin: 18px 4px 0; }
 
-  /* Barra nera flottante delle fasce (come la tab bar della reference) */
+  /* Barra flottante delle fasce */
   .fasce-bar { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%);
                bottom: calc(env(safe-area-inset-bottom) + 14px); width: min(calc(100% - 28px), 460px);
                display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px;
-               background: #141316; border-radius: 26px;
-               box-shadow: 0 18px 40px -14px rgba(0,0,0,.55); }
-  .fasce-bar button { border: 0; background: transparent; color: rgba(255,255,255,.62); border-radius: 20px;
+               background: #0d1638; border-radius: 26px;
+               box-shadow: 0 18px 40px -14px rgba(0,0,0,.8), inset 0 0 0 1px rgba(233, 191, 98, .22); }
+  .fasce-bar button { border: 0; background: transparent; color: var(--muted); border-radius: 20px;
                       padding: 11px 2px 10px; font-size: 12.5px; font-weight: 600; white-space: nowrap;
                       display: flex; flex-direction: column; align-items: center; gap: 4px;
                       transition: background .25s, color .25s; }
-  .fasce-bar button i { font-style: normal; font-size: 19px; line-height: 1; filter: saturate(.9); }
-  .fasce-bar button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+  .fasce-bar button i { font-style: normal; font-size: 19px; line-height: 1; }
+  .fasce-bar button[aria-pressed="true"] { background: var(--gradiente-sel); color: #fff; }
 
   footer { max-width: 560px; margin: 30px auto 0; padding: 0 var(--gutter) 10px; color: var(--muted); font-size: 12.5px; }
-  .legenda { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; background: rgba(255,255,255,.7);
-             border-radius: 22px; padding: 16px; margin-bottom: 12px; color: var(--ink); font-weight: 500; }
+  .legenda { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; background: var(--vetro);
+             border: 1px solid var(--linea); border-radius: 22px; padding: 16px; margin-bottom: 12px;
+             color: var(--testo); font-weight: 500; }
   .legenda span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%;
-                          background: var(--c); margin-right: 8px; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+                          background: var(--c); margin-right: 8px; }
   .fasce-legenda { grid-template-columns: 1fr; gap: 6px; }
-  .avvisi { background: #ffe3d8; color: #8a3b1f; border-radius: 18px; padding: 12px 14px; margin-bottom: 12px; }
+  .avvisi { background: rgba(233, 191, 98, .12); color: var(--oro-chiaro); border: 1px solid var(--linea);
+            border-radius: 18px; padding: 12px 14px; margin-bottom: 12px; }
 
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
@@ -212,8 +286,8 @@
 <div class="atmosfera" aria-hidden="true"></div>
 
 <header class="testata">
-  <div class="marchio"><img src="<%= logo_data_uri %>" alt=""><span><b>Cinemone</b><small>Pescara e dintorni</small></span></div>
-  <div class="aggiornato">Agg. <%= h(@generato.strftime('%H:%M')) %></div>
+  <div class="marchio"><img src="<%= logo_data_uri %>" alt=""><span><b>OneScreen</b><small>Tutto il tuo cinema in un unico schermo 🍿</small></span></div>
+  <div class="aggiornato" id="aggiornato" data-data="<%= @generato.to_date.iso8601 %>" data-ora="<%= h(@generato.strftime('%H:%M')) %>" title="Ultimo aggiornamento">↻ <%= h(@generato.strftime('%H:%M')) %></div>
 </header>
 
 <div class="barra" id="barra">
@@ -223,7 +297,8 @@
   </div>
   <div class="giorni" role="toolbar" aria-label="Giorno">
   <%- @giorni.each_with_index do |d, i| -%>
-    <button type="button" class="giorno-btn" data-giorno="<%= i %>" aria-pressed="<%= i.zero? %>" aria-label="<%= h(data_estesa(d)) %>">
+    <button type="button" class="giorno-btn" data-giorno="<%= i %>" data-data="<%= d.iso8601 %>"
+            data-breve="<%= GIORNI_BREVI[d.wday] %>" aria-pressed="<%= i.zero? %>" aria-label="<%= h(data_estesa(d)) %>">
       <span class="gn"><%= d.day %></span><span class="gs"><%= i.zero? ? 'Oggi' : GIORNI_BREVI[d.wday] %></span>
     </button>
   <%- end -%>
@@ -232,23 +307,28 @@
 
 <main>
 <%- @giorni.each_with_index do |d, i| -%>
-  <section class="giorno<%= i.zero? ? ' attivo' : '' %>" data-giorno="<%= i %>">
+  <section class="giorno<%= i.zero? ? ' attivo' : '' %>" data-giorno="<%= i %>" data-data="<%= d.iso8601 %>"
+           data-senza-dati="<%= cinema_presenti(d).empty? %>">
     <div class="titolo-giorno">
       <div class="sopra"><%= h(sopratitolo_giorno(d)) %></div>
-      <%- titolo_data = "#{GIORNI[d.wday]} #{d.day} #{MESI[d.month - 1]}" -%>
+      <%- titolo_data = "#{GIORNI[d.wday]} #{d.day} #{MESI[d.month - 1].capitalize}" -%>
       <h1 style="--len:<%= titolo_data.length %>"><%= h(titolo_data) %></h1>
     </div>
     <%- preferiti = film_del_giorno(d, :preferito) -%>
     <%- noti = preferiti.reject { |f| f[:origine] == :sconosciuta } -%>
     <%- ignoti = preferiti.select { |f| f[:origine] == :sconosciuta } -%>
+    <div class="griglia principale">
     <%- noti.each do |f| -%>
-      <%= scheda(f, d) %>
+      <%= tessera(f, d, i) %>
     <%- end -%>
+    </div>
     <%- unless ignoti.empty? -%>
       <h2 class="sezione">Origine non nota <span class="conta"><%= ignoti.size %></span></h2>
+      <div class="griglia principale">
       <%- ignoti.each do |f| -%>
-        <%= scheda(f, d) %>
+        <%= tessera(f, d, i) %>
       <%- end -%>
+      </div>
     <%- end -%>
     <div class="vuoto-msg filtro-vuoto nascosto"></div>
 
@@ -256,9 +336,11 @@
     <%- unless sconosciuti.empty? -%>
     <details class="altri">
       <summary>Genere non riconosciuto <span class="conta"><%= sconosciuti.size %></span></summary>
+      <div class="griglia">
       <%- sconosciuti.each do |f| -%>
-        <%= scheda(f, d) %>
+        <%= tessera(f, d, i) %>
       <%- end -%>
+      </div>
     </details>
     <%- end -%>
 
@@ -266,10 +348,16 @@
     <%- unless altri.empty? -%>
     <details class="altri">
       <summary>Altri film <span class="conta"><%= altri.size %></span></summary>
+      <div class="griglia">
       <%- altri.each do |f| -%>
-        <%= scheda(f, d) %>
+        <%= tessera(f, d, i) %>
       <%- end -%>
+      </div>
     </details>
+    <%- end -%>
+
+    <%- (preferiti + sconosciuti + altri).each do |f| -%>
+    <%= dettaglio(f, d, i) %>
     <%- end -%>
 
     <%- mancanti = CINEMA.keys - cinema_presenti(d) -%>
@@ -278,7 +366,22 @@
     <%- end -%>
   </section>
 <%- end -%>
+  <div class="vuoto-msg nascosto" id="non-aggiornato">Gli orari di oggi non sono ancora arrivati: la pagina si aggiorna da sola nelle prossime ore.</div>
 </main>
+
+<!-- Pannello di dettaglio che sale dal basso (stile app Inviti) -->
+<div class="foglio" id="foglio" aria-hidden="true">
+  <div class="velo" data-chiudi></div>
+  <div class="pannello" id="pannello" role="dialog" aria-modal="true" aria-label="Dettagli del film" tabindex="-1">
+    <div class="testa-foglio">
+      <span class="maniglia" aria-hidden="true"></span>
+      <button type="button" class="chiudi" data-chiudi aria-label="Chiudi">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="contenuto" id="contenuto"></div>
+  </div>
+</div>
 
 <footer>
   <div class="legenda">
@@ -307,52 +410,105 @@
 
 <script>
 (function () {
-  var giorni = document.querySelectorAll('.giorno-btn');
-  var sezioni = document.querySelectorAll('section.giorno');
+  var giorni = Array.prototype.slice.call(document.querySelectorAll('.giorno-btn'));
+  var sezioni = Array.prototype.slice.call(document.querySelectorAll('section.giorno'));
   var filtri = document.querySelectorAll('.fasce-bar button');
-  var barra = document.getElementById('barra');
   var aree = document.querySelectorAll('.aree button');
+  var barra = document.getElementById('barra');
+  var foglio = document.getElementById('foglio');
+  var pannello = document.getElementById('pannello');
+  var contenuto = document.getElementById('contenuto');
   var filtro = 'tutte';
   var area = 'italiano';
   try { area = localStorage.getItem('cinema-area') || 'italiano'; } catch (e) {}
   var NOMI_FASCE = { prima: 'prima di cena', cavallo: 'a cavallo della cena', dopo: 'dopo cena' };
 
-  function nellArea(a) {
-    var o = a.dataset.origine;
-    return o === area || o === 'sconosciuta';
+  /* ---------- Data: "oggi" è quella del telefono, non quella dell'ultimo aggiornamento ---------- */
+  function iso(d) {
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function differenza(a, b) { // giorni tra due date ISO
+    return Math.round((Date.parse(a + 'T12:00:00') - Date.parse(b + 'T12:00:00')) / 864e5);
+  }
+  var oggi = iso(new Date());
+
+  function sistemaDate() {
+    giorni.slice().forEach(function (b) {
+      if (b.dataset.data < oggi) {
+        var sez = document.querySelector('section.giorno[data-giorno="' + b.dataset.giorno + '"]');
+        if (sez) sez.remove();
+        b.remove();
+        giorni.splice(giorni.indexOf(b), 1);
+      }
+    });
+    // Al massimo 7 giorni da oggi
+    giorni.slice(7).forEach(function (b) {
+      var sez = document.querySelector('section.giorno[data-giorno="' + b.dataset.giorno + '"]');
+      if (sez) sez.remove();
+      b.remove();
+    });
+    giorni = giorni.slice(0, 7);
+    sezioni = Array.prototype.slice.call(document.querySelectorAll('section.giorno'));
+    giorni.forEach(function (b) {
+      var n = differenza(b.dataset.data, oggi);
+      b.querySelector('.gs').textContent = n === 0 ? 'Oggi' : b.dataset.breve;
+      var sez = document.querySelector('section.giorno[data-giorno="' + b.dataset.giorno + '"]');
+      if (sez) sez.querySelector('.sopra').textContent = n === 0 ? 'Oggi' : n === 1 ? 'Domani' : 'Tra ' + n + ' giorni';
+    });
+    var agg = document.getElementById('aggiornato');
+    var dAgg = differenza(oggi, agg.dataset.data);
+    agg.textContent = '↻ ' + (dAgg === 0 ? '' : dAgg === 1 ? 'ieri ' : agg.dataset.data.slice(8, 10) + '/' + agg.dataset.data.slice(5, 7) + ' ') + agg.dataset.ora;
+    var primo = giorni.filter(function (b) { return b.dataset.data === oggi; })[0] || giorni[0];
+    document.getElementById('non-aggiornato').classList.toggle('nascosto', !!(primo && primo.dataset.data === oggi));
+    if (primo) scegliGiorno(primo, false);
+  }
+
+  function scegliGiorno(b, scorri) {
+    giorni.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    sezioni.forEach(function (s) { s.classList.toggle('attivo', s.dataset.giorno === b.dataset.giorno); });
+    applica();
+    if (scorri) {
+      b.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  /* ---------- Filtri: area (italiano/straniero) e fascia ---------- */
+  function visibile(t) {
+    var inArea = t.closest('details') || t.dataset.origine === area || t.dataset.origine === 'sconosciuta';
+    var inFascia = filtro === 'tutte' || (' ' + t.dataset.fasce + ' ').indexOf(' ' + filtro + ' ') >= 0;
+    return inArea && inFascia;
   }
 
   function applica() {
     aree.forEach(function (b) { b.setAttribute('aria-selected', b.dataset.area === area); });
     sezioni.forEach(function (sez) {
-      sez.querySelectorAll('.fascia').forEach(function (f) {
-        f.classList.toggle('nascosto', filtro !== 'tutte' && f.dataset.fascia !== filtro);
-      });
       var visibili = 0;
-      sez.querySelectorAll('article.film').forEach(function (a) {
-        var ha = a.querySelector('.fascia:not(.nascosto)') && (a.closest('details') || nellArea(a));
-        a.classList.toggle('nascosto', !ha);
-        if (ha && !a.closest('details')) visibili++;
+      sez.querySelectorAll('.tessera').forEach(function (t) {
+        var v = visibile(t);
+        t.classList.toggle('nascosto', !v);
+        if (v && !t.closest('details')) visibili++;
       });
-      // Contatori delle due aree per il giorno attivo
+      sez.querySelectorAll('h2.sezione').forEach(function (titolo) {
+        var griglia = titolo.nextElementSibling;
+        var n = griglia ? griglia.querySelectorAll('.tessera:not(.nascosto)').length : 0;
+        titolo.classList.toggle('nascosto', n === 0);
+        titolo.querySelector('.conta').textContent = n;
+      });
       if (sez.classList.contains('attivo')) {
         aree.forEach(function (b) {
           var n = 0;
-          sez.querySelectorAll(':scope > article.film[data-origine="' + b.dataset.area + '"]').forEach(function (a) {
-            if (a.querySelector('.fascia:not(.nascosto)')) n++;
+          sez.querySelectorAll('.griglia.principale .tessera[data-origine="' + b.dataset.area + '"]').forEach(function (t) {
+            if (filtro === 'tutte' || (' ' + t.dataset.fasce + ' ').indexOf(' ' + filtro + ' ') >= 0) n++;
           });
           b.querySelector('.n').textContent = n;
         });
       }
-      sez.querySelectorAll('h2.sezione').forEach(function (titolo) {
-        var el = titolo.nextElementSibling, n = 0;
-        while (el && el.tagName === 'ARTICLE') { if (!el.classList.contains('nascosto')) n++; el = el.nextElementSibling; }
-        titolo.classList.toggle('nascosto', n === 0);
-        titolo.querySelector('.conta').textContent = n;
-      });
       var msg = sez.querySelector('.filtro-vuoto');
-      msg.textContent = 'Nessun film ' + (area === 'italiano' ? 'italiano' : 'straniero') +
-        ' dei tuoi generi' + (filtro === 'tutte' ? '' : ' ' + NOMI_FASCE[filtro]) + ' in questo giorno.';
+      msg.textContent = sez.dataset.senzaDati === 'true'
+        ? 'I cinema non hanno ancora pubblicato la programmazione di questo giorno. Di solito la nuova settimana (da giovedì a mercoledì) esce il mercoledì: la pagina si aggiorna da sola.'
+        : 'Nessun film ' + (area === 'italiano' ? 'italiano' : 'straniero') +
+          ' dei tuoi generi' + (filtro === 'tutte' ? '' : ' ' + NOMI_FASCE[filtro]) + ' in questo giorno.';
       msg.classList.toggle('nascosto', visibili > 0);
     });
   }
@@ -364,16 +520,7 @@
       applica();
     });
   });
-
-  giorni.forEach(function (b) {
-    b.addEventListener('click', function () {
-      giorni.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-      sezioni.forEach(function (s) { s.classList.toggle('attivo', s.dataset.giorno === b.dataset.giorno); });
-      applica();
-      b.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
+  giorni.forEach(function (b) { b.addEventListener('click', function () { scegliGiorno(b, true); }); });
   filtri.forEach(function (b) {
     b.addEventListener('click', function () {
       filtro = b.dataset.filtro;
@@ -381,23 +528,90 @@
       applica();
     });
   });
-  document.querySelectorAll('.trama .altro').forEach(function (b) {
-    b.addEventListener('click', function () { b.parentNode.classList.add('aperta'); });
+
+  /* ---------- Pannello di dettaglio ---------- */
+  var ultimoFocus = null;
+  function apri(id) {
+    var tpl = document.getElementById(id);
+    if (!tpl) return;
+    contenuto.innerHTML = '';
+    contenuto.appendChild(tpl.content.cloneNode(true));
+    passati();
+    pannello.scrollTop = 0;
+    // Se stai filtrando per fascia, ti interessano gli orari: scorri direttamente lì
+    if (filtro !== 'tutte') {
+      var orari = contenuto.querySelector('.spettacoli');
+      if (orari) setTimeout(function () { pannello.scrollTo({ top: orari.offsetTop - 12, behavior: 'smooth' }); }, 380);
+    }
+    foglio.classList.add('aperto');
+    foglio.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('bloccato');
+    try { history.pushState({ foglio: id }, ''); } catch (e) {}
+    ultimoFocus = document.activeElement;
+    pannello.focus({ preventScroll: true });
+  }
+  function chiudi(daHistory) {
+    if (!foglio.classList.contains('aperto')) return;
+    foglio.classList.remove('aperto');
+    foglio.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('bloccato');
+    pannello.style.transform = '';
+    if (!daHistory && history.state && history.state.foglio) { try { history.back(); } catch (e) {} }
+    if (ultimoFocus) ultimoFocus.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('.tessera');
+    if (t) { apri(t.dataset.apri); return; }
+    if (e.target.closest('[data-chiudi]')) { chiudi(false); return; }
+    var altro = e.target.closest('.trama .altro');
+    if (altro) {
+      var trama = altro.parentNode;
+      var aperta = trama.classList.toggle('aperta');
+      altro.setAttribute('aria-expanded', aperta);
+      // Richiudendo, torna all'inizio della trama così non perdi il punto
+      if (!aperta) trama.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
   });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') chiudi(false); });
+  window.addEventListener('popstate', function () { chiudi(true); });
+
+  // Trascina in giù per chiudere
+  var y0 = null, dy = 0;
+  pannello.addEventListener('touchstart', function (e) {
+    y0 = pannello.scrollTop <= 0 ? e.touches[0].clientY : null; dy = 0;
+  }, { passive: true });
+  pannello.addEventListener('touchmove', function (e) {
+    if (y0 === null) return;
+    dy = e.touches[0].clientY - y0;
+    if (dy > 0) { pannello.classList.add('trascina'); pannello.style.transform = 'translateY(' + dy + 'px)'; }
+  }, { passive: true });
+  pannello.addEventListener('touchend', function () {
+    pannello.classList.remove('trascina');
+    if (y0 !== null && dy > 110) chiudi(false); else pannello.style.transform = '';
+    y0 = null;
+  });
+
   window.addEventListener('scroll', function () {
     barra.classList.toggle('ombra', window.scrollY > 60);
   }, { passive: true });
 
-  // Attenua gli spettacoli già iniziati.
+  /* ---------- Spettacoli già iniziati ---------- */
   function passati() {
     var ora = Date.now();
     document.querySelectorAll('.orario').forEach(function (a) {
       a.classList.toggle('passato', Number(a.dataset.inizio) < ora);
     });
+    document.querySelectorAll('.tessera').forEach(function (t) {
+      t.classList.toggle('finito', Number(t.dataset.ultimo) < ora);
+    });
   }
+
+  sistemaDate();
   passati();
-  setInterval(passati, 60000);
-  applica();
+  setInterval(function () {
+    passati();
+    if (iso(new Date()) !== oggi) { oggi = iso(new Date()); sistemaDate(); } // a mezzanotte cambia giorno da sola
+  }, 60000);
 })();
 </script>
 </body>
