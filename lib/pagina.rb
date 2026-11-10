@@ -166,22 +166,24 @@ class Pagina
                end
     bandiera = { italiano: '🇮🇹', straniero: '🌍' }[film[:origine]]
     icone = Catalogo::FASCE.map do |fascia, icona, nome|
-      %(<i class="#{fasce.include?(fascia) ? 'on' : ''}" title="#{h(nome)}">#{icona}</i>)
+      %(<i data-fascia="#{fascia}" class="#{fasce.include?(fascia) ? 'on' : ''}" title="#{h(nome)}">#{icona}</i>)
     end.join
     ultimo = lista.map { |s| istante(s) }.max
     orari = lista.size == 1 ? '1 orario' : "#{lista.size} orari"
-    meta = [durata(film[:durata]), orari].compact.join(' · ')
+    # Ogni spettacolo come "cinema:fascia:istante": il telefono filtra per i cinema del profilo
+    elenco_orari = lista.map { |s| "#{s[:cinema]}:#{s[:fascia]}:#{istante(s)}" }.join(' ')
 
     <<~HTML
       <button type="button" class="tessera" data-apri="#{id_dettaglio(film, indice_giorno)}"
               data-origine="#{film[:origine]}" data-fasce="#{fasce.join(' ')}" data-ultimo="#{ultimo}"
+              data-generi="#{h(film[:generi].join('|'))}" data-orari="#{elenco_orari}"
               aria-label="#{h(film[:titolo])}: vedi trama e orari">
         #{immagine}
         <span class="velo-t" aria-hidden="true"></span>
         #{bandiera ? %(<span class="bandiera">#{bandiera}</span>) : ''}
         <span class="info">
           <span class="t-titolo">#{h(film[:titolo])}</span>
-          <span class="t-meta">#{h(meta)}</span>
+          <span class="t-meta">#{h([durata(film[:durata])].compact.join)}#{film[:durata] ? ' · ' : ''}<span class="t-conta">#{orari}</span></span>
           <span class="t-fasce">#{icone}</span>
         </span>
       </button>
@@ -193,13 +195,35 @@ class Pagina
     %(<template id="#{id_dettaglio(film, indice_giorno)}">#{scheda(film, data)}</template>)
   end
 
+  # Tutti i generi selezionabili nel profilo (nomi TMDB in italiano)
+  GENERI_TUTTI = %w[Commedia Dramma Romance Storia Musica Documentario Famiglia Avventura Azione Fantasy
+                    Fantascienza Mistero Crime Thriller Horror Animazione Guerra Western].freeze
+
+  # Impostazioni passate alla pagina: preferenze predefinite (da config.yml), generi e cinema disponibili.
+  def impostazioni_json
+    JSON.generate(
+      generi: GENERI_TUTTI,
+      cinema: CINEMA.map { |id, c| { id: id, nome: c[:nome], breve: c[:breve], colore: c[:colore] } },
+      predefiniti: {
+        piacciono: Array(@config['generi_preferiti']),
+        evita: Array(@config['generi_esclusi'])
+      },
+      uci: 'https://www.ucicinemas.it/'
+    ).gsub('</', '<\/')
+  end
+
+  # Tutti i film di un giorno (il filtro per genere lo fa il telefono, in base al profilo)
+  def film_giorno_tutti(data)
+    @film.select { |f| f[:spettacoli].any? { |s| s[:data] == data } }
+  end
+
   def pulsante(s)
     c = CINEMA[s[:cinema]] || { breve: s[:cinema], nome: s[:cinema], colore: '#888' }
     tag = s[:tag].map { |t| %(<span class="tag">#{h(t)}</span>) }.join
     fine = "fine #{s[:fine_stimata] ? '~' : ''}#{s[:fine]}"
     classi = ['orario', s[:fascia].to_s, (s[:esaurito] ? 'esaurito' : nil)].compact.join(' ')
     <<~HTML
-      <a class="#{classi}" href="#{h(s[:link])}" target="_blank" rel="noopener"
+      <a class="#{classi}" href="#{h(s[:link])}" target="_blank" rel="noopener" data-cinema="#{s[:cinema]}"
          data-inizio="#{istante(s)}" style="--c:#{c[:colore]}" aria-label="#{h(s[:ora])}, #{h(c[:nome])}: acquista">
         <span class="ora">#{h(s[:ora])}</span>
         <span class="cin">#{h(c[:breve])}</span>
