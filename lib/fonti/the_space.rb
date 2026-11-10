@@ -1,9 +1,10 @@
 require_relative '../util'
 require_relative 'mymovies'
+require_relative 'comingsoon'
 
 # The Space Cinema Montesilvano: API JSON usata dal sito ufficiale.
-# L'API non sempre risponde (a volte rifiuta le richieste con 401):
-# i giorni non disponibili vengono saltati e, se manca oggi, si usa MyMovies.
+# L'API non sempre risponde (dai server di GitHub rifiuta i giorni futuri con 401):
+# i giorni mancanti vengono presi da ComingSoon e, se manca anche oggi, da MyMovies.
 module Fonti
   module TheSpace
     ID = 'space'
@@ -12,6 +13,7 @@ module Fonti
     BASE = 'https://www.thespacecinema.it'
     PAGINA_CINEMA = "#{BASE}/cinema/montesilvano/al-cinema".freeze
     MYMOVIES = 'https://www.mymovies.it/cinema/pescara/montesilvano/5680/'
+    COMINGSOON = 'https://www.comingsoon.it/cinema/pescara/the-space-cinema-montesilvano/8/'
 
     module_function
 
@@ -52,6 +54,20 @@ module Fonti
           end
         end
       end
+      # Giorni che l'API non ha dato: li prendo da ComingSoon (link d'acquisto sempre sul sito The Space)
+      coperti = risultati.map { |r| r[:data] }.uniq
+      if coperti.size < giorni
+        begin
+          altri = ComingSoon.spettacoli(pagina: COMINGSOON, cinema: ID, link: PAGINA_CINEMA, oggi: oggi,
+                                        giorni: giorni, link_ufficiale: BASE)
+          aggiunti = altri.reject { |r| coperti.include?(r[:data]) }
+          warn "  The Space: #{aggiunti.size} spettacoli da ComingSoon" unless aggiunti.empty?
+          risultati.concat(aggiunti)
+        rescue StandardError => e
+          warn "  The Space ComingSoon: #{e.message}"
+        end
+      end
+
       if risultati.none? { |r| r[:data] == oggi }
         warn '  The Space: uso MyMovies per oggi'
         risultati.concat(MyMovies.spettacoli(pagina: MYMOVIES, cinema: ID, link: PAGINA_CINEMA, oggi: oggi))
