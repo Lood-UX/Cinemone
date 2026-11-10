@@ -286,6 +286,138 @@
   .avvisi { background: rgba(233, 191, 98, .12); color: var(--oro-chiaro); border: 1px solid var(--linea);
             border-radius: 18px; padding: 12px 14px; margin-bottom: 12px; }
 
+  /* ---------- Intestazione: card e avatar ---------- */
+  .azioni-testa { display: flex; gap: 8px; flex: 0 0 auto; }
+  .tondo { width: 42px; height: 42px; border-radius: 50%; border: 0; padding: 0; display: grid; place-items: center;
+           background: var(--vetro); box-shadow: inset 0 0 0 1px var(--linea); color: var(--testo); overflow: hidden; }
+  .tondo svg { width: 21px; height: 21px; }
+  .tondo:active { transform: scale(.94); }
+  .avatar { font-size: 16px; font-weight: 700; background: var(--gradiente-sel); box-shadow: var(--ombra-sel); color: #fff; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .riga-sopra { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .agg { font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+
+  /* ---------- Schermata di apertura ---------- */
+  .splash { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; text-align: center;
+            background:
+              radial-gradient(90% 55% at 12% -8%, rgba(43, 66, 148, .9) 0%, rgba(43, 66, 148, 0) 70%),
+              radial-gradient(70% 45% at 108% 18%, rgba(201, 167, 106, .3) 0%, rgba(201, 167, 106, 0) 70%),
+              radial-gradient(120% 55% at 50% 112%, rgba(214, 178, 112, .45) 0%, rgba(214, 178, 112, 0) 66%),
+              linear-gradient(180deg, #101b45 0%, #0a1130 50%, #0e1332 100%);
+            transition: opacity .5s ease, visibility .5s; }
+  .splash.via { opacity: 0; visibility: hidden; }
+  .splash-in { padding: 0 32px; animation: comparsa .9s cubic-bezier(.2,.8,.2,1) both; }
+  .splash-logo { width: 112px; height: 112px; border-radius: 28px;
+                 box-shadow: 0 24px 50px -18px rgba(233, 191, 98, .55), 0 0 0 1px rgba(233, 191, 98, .3); }
+  .splash-nome { margin-top: 22px; font-size: 38px; font-weight: 650; letter-spacing: -1px; color: var(--crema); }
+  .splash-payoff { margin-top: 10px; font-size: 17px; line-height: 1.4; color: var(--muted); }
+  @keyframes comparsa { from { opacity: 0; transform: translateY(12px) scale(.96); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Profilo ---------- */
+  .pannello.profilo { background: var(--notte-2); }
+  .profilo-form { padding: 34px 20px calc(env(safe-area-inset-bottom) + 28px); }
+  .profilo-form h2 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -.6px; }
+  .intro-profilo { margin: 6px 0 18px; color: var(--muted); font-size: 14px; }
+  .foto-riga { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .foto-profilo { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex: 0 0 auto; }
+  .anteprima-foto { width: 76px; height: 76px; border-radius: 50%; overflow: hidden; display: grid; place-items: center;
+                    background: var(--gradiente-sel); box-shadow: var(--ombra-sel); font-size: 28px; font-weight: 700; color: #fff; }
+  .anteprima-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .foto-azione { font-size: 12px; font-weight: 600; color: var(--sel-chiaro); }
+  .campo { display: block; }
+  .nome-campo { flex: 1; min-width: 0; }
+  .campo span { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .campo input { width: 100%; font: inherit; font-size: 16px; color: var(--testo); background: var(--vetro);
+                 border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 12px 14px; outline: none; }
+  .campo input:focus { border-color: #6580e6; box-shadow: 0 0 0 3px rgba(101, 128, 230, .25); }
+  .profilo-form fieldset { border: 0; padding: 0; margin: 22px 0 0; min-width: 0; }
+  .profilo-form legend { padding: 0; font-size: 16px; font-weight: 700; letter-spacing: -.2px; }
+  .aiuto { margin: 4px 0 10px; font-size: 12.5px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip-scelta { border: 0; font: inherit; font-size: 14px; font-weight: 600; padding: 9px 14px; border-radius: 999px;
+                 color: var(--muted); background: var(--vetro); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+                 transition: background .2s, color .2s; }
+  .chip-scelta[aria-pressed="true"] { color: #fff; background: var(--gradiente-sel); box-shadow: var(--ombra-sel); }
+  .chips.evita .chip-scelta[aria-pressed="true"] { background: linear-gradient(160deg, #d9656f, #a8434d);
+                                                   box-shadow: 0 8px 20px -10px rgba(217, 101, 111, .8); }
+  .chip-scelta .pallino { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px;
+                          background: var(--c); vertical-align: 1px; }
+  .riga-pulsanti { display: flex; gap: 8px; margin-bottom: 14px; }
+  .pulsante { display: inline-flex; align-items: center; justify-content: center; border: 0; font: inherit;
+              font-size: 15px; font-weight: 650; padding: 13px 18px; border-radius: 16px; cursor: pointer; text-decoration: none; }
+  .pulsante.sec { color: var(--testo); background: var(--vetro-forte); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+  .pulsante.pri { color: #fff; background: var(--gradiente-sel); box-shadow: var(--ombra-sel); }
+  .profilo-form > .pulsante.pri { width: 100%; margin-top: 26px; font-size: 16px; padding: 15px; }
+  .nota-privacy { margin: 14px 0 0; text-align: center; font-size: 12px; color: var(--muted); }
+
+  /* ---------- Tessere nel profilo ---------- */
+  .lista-tessere { display: grid; gap: 10px; }
+  .riga-tessera { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; padding: 10px;
+                  border-radius: 18px; background: var(--vetro); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+  .miniatura { position: relative; width: 92px; aspect-ratio: 1.586; border-radius: 10px; overflow: hidden; border: 0; padding: 0;
+               background: #fff; display: grid; place-items: center; color: #0b1433; font-size: 11px; font-weight: 700; }
+  .miniatura img { width: 100%; height: 100%; object-fit: cover; }
+  .miniatura .cambia { position: absolute; inset: auto 0 0 0; padding: 3px 0; font-size: 10px; font-weight: 700;
+                       color: #fff; background: rgba(7, 13, 36, .65); text-align: center; }
+  .campi-tessera { display: grid; gap: 6px; min-width: 0; }
+  .campi-tessera input { width: 100%; min-width: 0; font: inherit; font-size: 15px; color: var(--testo); background: rgba(255,255,255,.06);
+                         border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 8px 10px; outline: none; }
+  .campi-tessera input.link { font-size: 13px; color: var(--muted); }
+  .campi-tessera input:focus { border-color: #6580e6; }
+  .rimuovi-tessera { width: 34px; height: 34px; border-radius: 50%; border: 0; display: grid; place-items: center;
+                     color: #f0a0a6; background: rgba(217, 101, 111, .14); }
+  .rimuovi-tessera svg { width: 14px; height: 14px; }
+  .aggiungi-tessera { width: 100%; margin-top: 10px; }
+
+  /* ---------- Portafoglio: tessere a tutto schermo, nello stile dell'app ---------- */
+  .portafoglio { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; color: var(--testo);
+                 padding: calc(env(safe-area-inset-top) + 14px) 0 calc(env(safe-area-inset-bottom) + 18px);
+                 background:
+                   radial-gradient(90% 50% at 15% -5%, rgba(43, 66, 148, .9) 0%, rgba(43, 66, 148, 0) 70%),
+                   radial-gradient(110% 50% at 50% 110%, rgba(214, 178, 112, .4) 0%, rgba(214, 178, 112, 0) 66%),
+                   linear-gradient(180deg, #101b45 0%, #0a1130 55%, #0e1332 100%);
+                 animation: entra .3s cubic-bezier(.2,.8,.2,1); }
+  .portafoglio-testa { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter) 6px; }
+  .portafoglio-testa h2 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -.6px; }
+  .chiudi-portafoglio { width: 38px; height: 38px; border-radius: 50%; border: 0; display: grid; place-items: center;
+                        color: var(--testo); background: var(--vetro-forte); box-shadow: inset 0 0 0 1px var(--linea); }
+  .chiudi-portafoglio svg { width: 14px; height: 14px; }
+  .carosello { flex: 1; min-height: 0; display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+               padding: 14px var(--gutter); scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .carosello::-webkit-scrollbar { display: none; }
+  .tessera-portafoglio { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 14px; min-height: 0;
+                         justify-content: center; }
+  .tp-nome { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; letter-spacing: -.3px; }
+  .tp-nome i { font-style: normal; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+               background: var(--gradiente-sel); box-shadow: var(--ombra-sel); font-size: 15px; }
+  /* Riquadro bianco: il codice a barre deve restare leggibile allo scanner */
+  .tp-immagine { flex: 1; min-height: 0; border-radius: 24px; background: #fff; padding: 14px; display: grid; place-items: center;
+                 box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .9), 0 0 0 1px rgba(233, 191, 98, .25); }
+  .tp-immagine img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; }
+  .tp-link { align-self: center; }
+  .tp-alterna { align-self: center; font-size: 13px; padding: 9px 14px; }
+  /* Tessera disegnata da OneScreen */
+  .tp-carta { position: relative; overflow: hidden; border-radius: 26px; padding: 22px 20px 20px; isolation: isolate;
+              background:
+                radial-gradient(80% 70% at 0% 0%, rgba(101, 128, 230, .65) 0%, rgba(101, 128, 230, 0) 70%),
+                radial-gradient(70% 60% at 100% 100%, rgba(214, 178, 112, .35) 0%, rgba(214, 178, 112, 0) 70%),
+                linear-gradient(150deg, #2b4294 0%, #1b2c6c 55%, #121c4a 100%);
+              box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .9), inset 0 0 0 1px rgba(233, 191, 98, .35); }
+  .tp-carta::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .5;
+                     background: linear-gradient(115deg, rgba(255,255,255,0) 35%, rgba(255,255,255,.12) 50%, rgba(255,255,255,0) 65%); }
+  .tp-carta-testa { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+  .tp-carta-nome { font-size: 24px; font-weight: 700; letter-spacing: -.5px; color: #fff; }
+  .tp-carta-sotto { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--oro); }
+  /* Il codice resta nero su bianco, con margini bianchi: è ciò che legge lo scanner */
+  .tp-carta-codice { background: #fff; border-radius: 16px; padding: 18px 16px 12px; text-align: center; }
+  .codice-barre { display: block; width: 100%; height: 110px; shape-rendering: crispEdges; }
+  .tp-carta-numero { margin-top: 8px; font-size: 22px; font-weight: 600; letter-spacing: 3px; color: #0b1433;
+                     font-variant-numeric: tabular-nums; }
+  .puntini { display: flex; justify-content: center; gap: 7px; padding: 6px 0 2px; }
+  .puntini span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.25); transition: background .2s, width .2s; }
+  .puntini span.attivo { width: 20px; border-radius: 4px; background: #6580e6; }
+  .portafoglio-nota { margin: 8px var(--gutter) 0; text-align: center; font-size: 12px; color: var(--muted); }
+
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
@@ -293,10 +425,103 @@
 <div class="atmosfera" aria-hidden="true"></div>
 <div class="tappo-stato" id="tappo-stato" aria-hidden="true"></div>
 
+<!-- Schermata di apertura -->
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash-in">
+    <img class="splash-logo" src="<%= logo_data_uri %>" alt="">
+    <div class="splash-nome">OneScreen</div>
+    <div class="splash-payoff">Tutto il tuo cinema<br>in un unico schermo 🍿</div>
+  </div>
+</div>
+
+<!-- Profilo: tutto salvato solo su questo telefono -->
+<div class="foglio" id="foglio-profilo" aria-hidden="true">
+  <div class="velo" data-chiudi-profilo></div>
+  <div class="pannello profilo" id="pannello-profilo" role="dialog" aria-modal="true" aria-labelledby="titolo-profilo" tabindex="-1">
+    <div class="testa-foglio">
+      <span class="maniglia" aria-hidden="true"></span>
+      <button type="button" class="chiudi" data-chiudi-profilo aria-label="Chiudi">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form class="profilo-form" id="form-profilo" novalidate>
+      <h2 id="titolo-profilo">Il tuo profilo</h2>
+      <p class="intro-profilo" id="intro-profilo">Scegli cosa ti piace e quali cinema frequenti: OneScreen ti mostrerà solo i film giusti per te.</p>
+
+      <div class="foto-riga">
+        <label class="foto-profilo" for="input-foto">
+          <span class="anteprima-foto" id="anteprima-foto"></span>
+          <span class="foto-azione">Cambia foto</span>
+        </label>
+        <input type="file" id="input-foto" accept="image/*" hidden>
+        <label class="campo nome-campo"><span>Nome</span>
+          <input type="text" id="input-nome" maxlength="30" autocomplete="given-name" placeholder="Come ti chiami?">
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Generi che ti piacciono</legend>
+        <p class="aiuto">Se non ne scegli nessuno, vedi tutti i film.</p>
+        <div class="chips" id="chips-piacciono"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Generi da evitare</legend>
+        <p class="aiuto">Basta uno di questi generi e il film non compare.</p>
+        <div class="chips evita" id="chips-evita"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>I tuoi cinema</legend>
+        <div class="chips" id="chips-cinema"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Le tue tessere</legend>
+        <p class="aiuto">Card fedeltà e abbonamenti (My UCI, abbonamento The Space…): scrivi il numero sotto il codice a barre e OneScreen disegna la tessera con il suo codice (puoi aggiungere anche lo screenshot). La apri con un tocco dal pulsante in alto.</p>
+        <div class="lista-tessere" id="lista-tessere"></div>
+        <button type="button" class="pulsante sec aggiungi-tessera" id="aggiungi-tessera">＋ Aggiungi tessera</button>
+        <input type="file" id="input-tessera" accept="image/*" hidden>
+        <datalist id="nomi-tessere">
+          <option value="My UCI"></option>
+          <option value="Abbonamento UCI"></option>
+          <option value="Abbonamento The Space"></option>
+          <option value="Card The Space"></option>
+          <option value="Abbonamento Arca"></option>
+          <option value="Abbonamento"></option>
+        </datalist>
+      </fieldset>
+
+      <button type="submit" class="pulsante pri">Salva</button>
+      <p class="nota-privacy">🔒 Nome, foto, preferenze e tessere restano solo su questo telefono: non vengono inviati a nessuno.</p>
+    </form>
+  </div>
+</div>
+
+<!-- Le tue tessere: portafoglio a tutto schermo, da mostrare alla cassa -->
+<div class="portafoglio nascosto" id="portafoglio" role="dialog" aria-modal="true" aria-label="Le tue tessere">
+  <div class="portafoglio-testa">
+    <h2>Le tue tessere</h2>
+    <button type="button" class="chiudi-portafoglio" id="chiudi-portafoglio" aria-label="Chiudi">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="carosello" id="carosello"></div>
+  <div class="puntini" id="puntini" aria-hidden="true"></div>
+  <p class="portafoglio-nota">Alza la luminosità dello schermo per far leggere il codice alla cassa.</p>
+</div>
+
 <header class="testata">
   <div class="marchio"><img src="<%= logo_data_uri %>" alt=""><span><b>OneScreen</b><small>Tutto il tuo cinema in un unico schermo 🍿</small></span></div>
-  <div class="aggiornato" id="aggiornato" data-data="<%= @generato.to_date.iso8601 %>" data-ora="<%= h(@generato.strftime('%H:%M')) %>" title="Ultimo aggiornamento">↻ <%= h(@generato.strftime('%H:%M')) %></div>
+  <div class="azioni-testa">
+    <button type="button" class="tondo nascosto" id="apri-card" aria-label="Le tue tessere">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 9.5h19" stroke="currentColor" stroke-width="1.8"/><path d="M6 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button type="button" class="tondo avatar" id="apri-profilo" aria-label="Il tuo profilo"></button>
+  </div>
+  <div class="nascosto" id="aggiornato" data-data="<%= @generato.to_date.iso8601 %>" data-ora="<%= h(@generato.strftime('%H:%M')) %>"></div>
 </header>
+<script type="application/json" id="impostazioni"><%= impostazioni_json %></script>
 
 <div class="barra" id="barra">
   <div class="aree" role="tablist" aria-label="Cinema">
@@ -318,13 +543,16 @@
   <section class="giorno<%= i.zero? ? ' attivo' : '' %>" data-giorno="<%= i %>" data-data="<%= d.iso8601 %>"
            data-senza-dati="<%= cinema_presenti(d).empty? %>">
     <div class="titolo-giorno">
-      <div class="sopra"><%= h(sopratitolo_giorno(d)) %></div>
+      <div class="riga-sopra"><span class="sopra"><%= h(sopratitolo_giorno(d)) %></span><span class="agg" title="Ultimo aggiornamento">↻ <%= h(@generato.strftime('%H:%M')) %></span></div>
       <%- titolo_data = "#{GIORNI[d.wday]} #{d.day} #{MESI[d.month - 1].capitalize}" -%>
       <h1 style="--len:<%= titolo_data.length %>"><%= h(titolo_data) %></h1>
     </div>
-    <%- preferiti = film_del_giorno(d, :preferito) -%>
-    <%- noti = preferiti.reject { |f| f[:origine] == :sconosciuta } -%>
-    <%- ignoti = preferiti.select { |f| f[:origine] == :sconosciuta } -%>
+    <%- tutti = film_giorno_tutti(d) -%>
+    <%- con_generi = tutti.reject { |f| f[:generi].empty? } -%>
+    <%- noti = con_generi.reject { |f| f[:origine] == :sconosciuta } -%>
+    <%- ignoti = con_generi.select { |f| f[:origine] == :sconosciuta } -%>
+    <%- senza_generi = tutti.select { |f| f[:generi].empty? } -%>
+    <%# Il telefono mostra solo i film che rispettano il profilo (generi, cinema) %>
     <div class="griglia principale">
     <%- noti.each do |f| -%>
       <%= tessera(f, d, i) %>
@@ -340,31 +568,18 @@
     <%- end -%>
     <div class="vuoto-msg filtro-vuoto nascosto"></div>
 
-    <%- sconosciuti = film_del_giorno(d, :sconosciuto) -%>
-    <%- unless sconosciuti.empty? -%>
+    <%- unless senza_generi.empty? -%>
     <details class="altri">
-      <summary>Genere non riconosciuto <span class="conta"><%= sconosciuti.size %></span></summary>
+      <summary>Genere non riconosciuto <span class="conta"><%= senza_generi.size %></span></summary>
       <div class="griglia">
-      <%- sconosciuti.each do |f| -%>
+      <%- senza_generi.each do |f| -%>
         <%= tessera(f, d, i) %>
       <%- end -%>
       </div>
     </details>
     <%- end -%>
 
-    <%- altri = @config['mostra_altri_film'] == false ? [] : film_del_giorno(d, :altro) -%>
-    <%- unless altri.empty? -%>
-    <details class="altri">
-      <summary>Altri film <span class="conta"><%= altri.size %></span></summary>
-      <div class="griglia">
-      <%- altri.each do |f| -%>
-        <%= tessera(f, d, i) %>
-      <%- end -%>
-      </div>
-    </details>
-    <%- end -%>
-
-    <%- (preferiti + sconosciuti + altri).each do |f| -%>
+    <%- tutti.each do |f| -%>
     <%= dettaglio(f, d, i) %>
     <%- end -%>
 
@@ -466,7 +681,8 @@
     });
     var agg = document.getElementById('aggiornato');
     var dAgg = differenza(oggi, agg.dataset.data);
-    agg.textContent = '↻ ' + (dAgg === 0 ? '' : dAgg === 1 ? 'ieri ' : agg.dataset.data.slice(8, 10) + '/' + agg.dataset.data.slice(5, 7) + ' ') + agg.dataset.ora;
+    var etichettaAgg = '↻ ' + (dAgg === 0 ? '' : dAgg === 1 ? 'ieri ' : agg.dataset.data.slice(8, 10) + '/' + agg.dataset.data.slice(5, 7) + ' ') + agg.dataset.ora;
+    document.querySelectorAll('.agg').forEach(function (e) { e.textContent = etichettaAgg; });
     var primo = giorni.filter(function (b) { return b.dataset.data === oggi; })[0] || giorni[0];
     document.getElementById('non-aggiornato').classList.toggle('nascosto', !!(primo && primo.dataset.data === oggi));
     if (primo) scegliGiorno(primo, false);
@@ -482,11 +698,49 @@
     }
   }
 
-  /* ---------- Filtri: area (italiano/straniero) e fascia ---------- */
-  function visibile(t) {
-    var inArea = t.closest('details') || t.dataset.origine === area || t.dataset.origine === 'sconosciuta';
-    var inFascia = filtro === 'tutte' || (' ' + t.dataset.fasce + ' ').indexOf(' ' + filtro + ' ') >= 0;
-    return inArea && inFascia;
+  /* ---------- Profilo (salvato solo su questo telefono) ---------- */
+  var IMPOSTAZIONI = JSON.parse(document.getElementById('impostazioni').textContent);
+  var TUTTI_CINEMA = IMPOSTAZIONI.cinema.map(function (c) { return c.id; });
+  function leggi(chiave) { try { return JSON.parse(localStorage.getItem(chiave) || 'null'); } catch (e) { return null; } }
+  function scrivi(chiave, valore) {
+    try { localStorage.setItem(chiave, JSON.stringify(valore)); return true; }
+    catch (e) { alert('Spazio esaurito sul telefono: prova con una foto più piccola.'); return false; }
+  }
+  var profilo = leggi('onescreen-profilo');
+  var primoAvvio = !profilo;
+  profilo = profilo || { nome: '', foto: null, piacciono: [], evita: [], cinema: TUTTI_CINEMA.slice(), ucilink: '' };
+  if (!profilo.cinema || !profilo.cinema.length) profilo.cinema = TUTTI_CINEMA.slice();
+
+  /* ---------- Filtri: profilo, area (italiano/straniero) e fascia ---------- */
+  // Spettacoli della locandina nei cinema scelti: [{cinema, fascia, istante}]
+  function orariScelti(t) {
+    return (t.dataset.orari || '').split(' ').filter(Boolean).map(function (x) {
+      var p = x.split(':'); return { cinema: p[0], fascia: p[1], istante: Number(p[2]) };
+    }).filter(function (o) { return profilo.cinema.indexOf(o.cinema) >= 0; });
+  }
+  function generiOk(t) {
+    var generi = t.dataset.generi ? t.dataset.generi.split('|') : [];
+    if (generi.some(function (g) { return profilo.evita.indexOf(g) >= 0; })) return false;
+    if (t.closest('details') || !profilo.piacciono.length) return true;
+    return generi.some(function (g) { return profilo.piacciono.indexOf(g) >= 0; });
+  }
+  // conArea=false serve per contare i film delle due schede italiano/straniero
+  function visibile(t, conArea) {
+    if (!generiOk(t)) return false;
+    var orari = orariScelti(t);
+    if (!orari.length) return false;
+    if (filtro !== 'tutte' && !orari.some(function (o) { return o.fascia === filtro; })) return false;
+    if (conArea === false || t.closest('details')) return true;
+    return t.dataset.origine === area || t.dataset.origine === 'sconosciuta';
+  }
+  // Aggiorna emoji delle fasce, numero di orari e "finito" in base ai cinema scelti
+  function aggiornaTessera(t) {
+    var orari = orariScelti(t);
+    var fasce = orari.map(function (o) { return o.fascia; });
+    t.querySelectorAll('.t-fasce i').forEach(function (i) { i.classList.toggle('on', fasce.indexOf(i.dataset.fascia) >= 0); });
+    var conta = t.querySelector('.t-conta');
+    if (conta) conta.textContent = orari.length === 1 ? '1 orario' : orari.length + ' orari';
+    t.dataset.ultimo = Math.max.apply(null, orari.map(function (o) { return o.istante; }).concat([0]));
   }
 
   function applica() {
@@ -494,6 +748,7 @@
     sezioni.forEach(function (sez) {
       var visibili = 0;
       sez.querySelectorAll('.tessera').forEach(function (t) {
+        aggiornaTessera(t);
         var v = visibile(t);
         t.classList.toggle('nascosto', !v);
         if (v && !t.closest('details')) visibili++;
@@ -504,11 +759,16 @@
         titolo.classList.toggle('nascosto', n === 0);
         titolo.querySelector('.conta').textContent = n;
       });
+      sez.querySelectorAll('details.altri').forEach(function (d) {
+        var n = d.querySelectorAll('.tessera:not(.nascosto)').length;
+        d.classList.toggle('nascosto', n === 0);
+        var c = d.querySelector('summary .conta'); if (c) c.textContent = n;
+      });
       if (sez.classList.contains('attivo')) {
         aree.forEach(function (b) {
           var n = 0;
           sez.querySelectorAll('.griglia.principale .tessera[data-origine="' + b.dataset.area + '"]').forEach(function (t) {
-            if (filtro === 'tutte' || (' ' + t.dataset.fasce + ' ').indexOf(' ' + filtro + ' ') >= 0) n++;
+            if (visibile(t, false)) n++;
           });
           b.querySelector('.n').textContent = n;
         });
@@ -517,9 +777,10 @@
       msg.textContent = sez.dataset.senzaDati === 'true'
         ? 'I cinema non hanno ancora pubblicato la programmazione di questo giorno. Di solito la nuova settimana (da giovedì a mercoledì) esce il mercoledì: la pagina si aggiorna da sola.'
         : 'Nessun film ' + (area === 'italiano' ? 'italiano' : 'straniero') +
-          ' dei tuoi generi' + (filtro === 'tutte' ? '' : ' ' + NOMI_FASCE[filtro]) + ' in questo giorno.';
+          ' per i tuoi gusti' + (filtro === 'tutte' ? '' : ' ' + NOMI_FASCE[filtro]) + ' in questo giorno.';
       msg.classList.toggle('nascosto', visibili > 0);
     });
+    passati();
   }
 
   aree.forEach(function (b) {
@@ -545,6 +806,13 @@
     if (!tpl) return;
     contenuto.innerHTML = '';
     contenuto.appendChild(tpl.content.cloneNode(true));
+    // Solo gli orari dei cinema scelti nel profilo
+    contenuto.querySelectorAll('.orario').forEach(function (o) {
+      if (profilo.cinema.indexOf(o.dataset.cinema) < 0) o.remove();
+    });
+    contenuto.querySelectorAll('.fascia').forEach(function (f) {
+      if (!f.querySelector('.orario')) f.remove();
+    });
     passati();
     pannello.scrollTop = 0;
     // Se stai filtrando per fascia, ti interessano gli orari: scorri direttamente lì
@@ -616,6 +884,321 @@
       t.classList.toggle('finito', Number(t.dataset.ultimo) < ora);
     });
   }
+
+  /* ---------- Tessere (card fedeltà e abbonamenti), salvate solo su questo telefono ---------- */
+  // [{ nome, img (immagine), link }]
+  var tessere = leggi('onescreen-tessere');
+  if (!tessere) {
+    // Recupera la card My UCI salvata dalla versione precedente
+    tessere = [];
+    var vecchia = null;
+    try { vecchia = localStorage.getItem('onescreen-card'); } catch (e) {}
+    if (vecchia || profilo.ucilink) tessere.push({ nome: 'My UCI', img: vecchia, link: profilo.ucilink || '' });
+  }
+  var btnProfilo = document.getElementById('apri-profilo');
+  var btnCard = document.getElementById('apri-card');
+  function iniziali(nome) {
+    var p = (nome || '').trim().split(/\s+/).filter(Boolean);
+    return p.length ? (p[0][0] + (p[1] ? p[1][0] : '')).toUpperCase() : '';
+  }
+  function disegnaAvatar(el, foto, nome) {
+    el.innerHTML = '';
+    if (foto) { var img = new Image(); img.src = foto; img.alt = ''; el.appendChild(img); }
+    else if (iniziali(nome)) el.textContent = iniziali(nome);
+    else el.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8.5" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  }
+  function aggiornaTestata() {
+    disegnaAvatar(btnProfilo, profilo.foto, profilo.nome);
+    btnProfilo.setAttribute('aria-label', profilo.nome ? 'Profilo di ' + profilo.nome : 'Il tuo profilo');
+    btnCard.classList.toggle('nascosto', !tessere.some(function (t) { return t.img || t.link || t.numero; }));
+  }
+
+  /* ---------- Pannello del profilo ---------- */
+  var foglioProfilo = document.getElementById('foglio-profilo');
+  var pannelloProfilo = document.getElementById('pannello-profilo');
+  var bozza = null;          // modifiche al profilo non ancora salvate
+  var tessereBozza = [];     // modifiche alle tessere non ancora salvate
+  var tesseraInModifica = -1; // a quale tessera va la foto appena scelta
+
+  function chip(contenitore, valori, scelti, etichetta) {
+    contenitore.innerHTML = '';
+    valori.forEach(function (v) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip-scelta'; b.dataset.valore = v.id || v;
+      b.setAttribute('aria-pressed', scelti.indexOf(v.id || v) >= 0);
+      if (v.colore) { var p = document.createElement('span'); p.className = 'pallino'; p.style.setProperty('--c', v.colore); b.appendChild(p); }
+      b.appendChild(document.createTextNode(etichetta ? etichetta(v) : v));
+      contenitore.appendChild(b);
+    });
+  }
+  function disegnaTessere() {
+    var box = document.getElementById('lista-tessere');
+    box.innerHTML = '';
+    tessereBozza.forEach(function (t, i) {
+      var riga = document.createElement('div');
+      riga.className = 'riga-tessera'; riga.dataset.indice = i;
+      var mini = document.createElement('button');
+      mini.type = 'button'; mini.className = 'miniatura'; mini.dataset.azione = 'foto';
+      mini.setAttribute('aria-label', 'Cambia la foto di ' + (t.nome || 'questa tessera'));
+      if (t.img) { var img = new Image(); img.src = t.img; img.alt = ''; mini.appendChild(img); }
+      else mini.appendChild(document.createTextNode('+ Foto'));
+      if (t.img) { var c = document.createElement('span'); c.className = 'cambia'; c.textContent = 'Cambia'; mini.appendChild(c); }
+      var campi = document.createElement('div'); campi.className = 'campi-tessera';
+      campi.innerHTML = '<input type="text" class="nome" list="nomi-tessere" maxlength="30" placeholder="Nome (es. My UCI)" aria-label="Nome della tessera">' +
+                        '<input type="text" class="numero" inputmode="numeric" autocomplete="off" placeholder="Numero sotto il codice a barre" aria-label="Numero della tessera">' +
+                        '<input type="url" class="link" inputmode="url" placeholder="Collegamento (facoltativo)" aria-label="Collegamento della tessera">';
+      campi.querySelector('.nome').value = t.nome || '';
+      campi.querySelector('.numero').value = t.numero || '';
+      campi.querySelector('.link').value = t.link || '';
+      var via = document.createElement('button');
+      via.type = 'button'; via.className = 'rimuovi-tessera'; via.dataset.azione = 'rimuovi';
+      via.setAttribute('aria-label', 'Rimuovi ' + (t.nome || 'questa tessera'));
+      via.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+      riga.appendChild(mini); riga.appendChild(campi); riga.appendChild(via);
+      box.appendChild(riga);
+    });
+  }
+  function leggiCampiTessere() {
+    document.querySelectorAll('#lista-tessere .riga-tessera').forEach(function (r) {
+      var t = tessereBozza[Number(r.dataset.indice)];
+      t.nome = r.querySelector('.nome').value.trim();
+      t.numero = r.querySelector('.numero').value.replace(/\s+/g, '');
+      t.link = r.querySelector('.link').value.trim();
+      if (t.link && !/^https?:\/\//i.test(t.link)) t.link = 'https://' + t.link;
+    });
+  }
+  function apriProfilo(benvenuto) {
+    bozza = JSON.parse(JSON.stringify(profilo));
+    tessereBozza = tessere.map(function (t) { return { nome: t.nome, numero: t.numero || '', img: t.img, link: t.link }; });
+    document.getElementById('titolo-profilo').textContent = benvenuto ? 'Benvenuto in OneScreen' : 'Il tuo profilo';
+    document.getElementById('intro-profilo').textContent = benvenuto
+      ? 'Prima di iniziare: dicci cosa ti piace e quali cinema frequenti, così ti mostriamo solo i film giusti per te.'
+      : 'Modifica i tuoi gusti, i cinema che frequenti e le tue tessere quando vuoi.';
+    document.getElementById('input-nome').value = bozza.nome || '';
+    disegnaAvatar(document.getElementById('anteprima-foto'), bozza.foto, bozza.nome);
+    chip(document.getElementById('chips-piacciono'), IMPOSTAZIONI.generi, bozza.piacciono);
+    chip(document.getElementById('chips-evita'), IMPOSTAZIONI.generi, bozza.evita);
+    chip(document.getElementById('chips-cinema'), IMPOSTAZIONI.cinema, bozza.cinema, function (c) { return c.nome; });
+    disegnaTessere();
+    pannelloProfilo.scrollTop = 0;
+    foglioProfilo.classList.add('aperto');
+    foglioProfilo.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('bloccato');
+    pannelloProfilo.focus({ preventScroll: true });
+  }
+  function chiudiProfilo() {
+    foglioProfilo.classList.remove('aperto');
+    foglioProfilo.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('bloccato');
+    // Al primo avvio, anche chiudendo senza salvare, non chiediamo di nuovo
+    if (primoAvvio) { primoAvvio = false; scrivi('onescreen-profilo', profilo); }
+  }
+
+  // Ridimensiona una foto scelta dal telefono prima di salvarla (le foto originali sono troppo grandi)
+  function ridimensiona(file, lato, qualita, fatto) {
+    var lettore = new FileReader();
+    lettore.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var s = Math.min(1, lato / Math.max(img.width, img.height));
+        var c = document.createElement('canvas');
+        c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        var x = c.getContext('2d');
+        x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+        x.drawImage(img, 0, 0, c.width, c.height);
+        fatto(c.toDataURL('image/jpeg', qualita));
+      };
+      img.onerror = function () { alert('Non riesco a leggere questa immagine: prova con un\'altra.'); };
+      img.src = lettore.result;
+    };
+    lettore.readAsDataURL(file);
+  }
+
+  var inputTessera = document.getElementById('input-tessera');
+  foglioProfilo.addEventListener('click', function (e) {
+    if (e.target.closest('[data-chiudi-profilo]')) { chiudiProfilo(); return; }
+    var azione = e.target.closest('[data-azione]');
+    if (azione) {
+      leggiCampiTessere();
+      var i = Number(azione.closest('.riga-tessera').dataset.indice);
+      if (azione.dataset.azione === 'foto') { tesseraInModifica = i; inputTessera.click(); }
+      else { tessereBozza.splice(i, 1); disegnaTessere(); }
+      return;
+    }
+    var c = e.target.closest('.chip-scelta');
+    if (!c) return;
+    var gruppo = c.parentNode.id === 'chips-piacciono' ? 'piacciono' : c.parentNode.id === 'chips-evita' ? 'evita' : 'cinema';
+    var lista = bozza[gruppo], v = c.dataset.valore, k = lista.indexOf(v);
+    if (k >= 0) lista.splice(k, 1); else lista.push(v);
+    c.setAttribute('aria-pressed', k < 0);
+    // Un genere non può essere sia "mi piace" sia "da evitare"
+    if (gruppo !== 'cinema' && k < 0) {
+      var altro = gruppo === 'piacciono' ? 'evita' : 'piacciono';
+      var j = bozza[altro].indexOf(v);
+      if (j >= 0) {
+        bozza[altro].splice(j, 1);
+        var b = document.querySelector('#chips-' + altro + ' [data-valore="' + v + '"]');
+        if (b) b.setAttribute('aria-pressed', 'false');
+      }
+    }
+  });
+  document.getElementById('aggiungi-tessera').addEventListener('click', function () {
+    leggiCampiTessere();
+    var nomi = tessereBozza.map(function (t) { return t.nome; });
+    tessereBozza.push({ nome: nomi.indexOf('My UCI') < 0 ? 'My UCI' : '', numero: '', img: null, link: '' });
+    disegnaTessere();
+    // Il cursore va sul numero: con il numero l'app disegna da sola la tessera e il codice a barre
+    var righe = document.querySelectorAll('#lista-tessere .riga-tessera');
+    righe[righe.length - 1].querySelector('.numero').focus();
+  });
+  inputTessera.addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f || tesseraInModifica < 0) return;
+    var i = tesseraInModifica;
+    // La tessera deve restare leggibile alla cassa: risoluzione più alta
+    ridimensiona(f, 1400, .9, function (dati) { leggiCampiTessere(); tessereBozza[i].img = dati; disegnaTessere(); });
+    e.target.value = '';
+  });
+  document.getElementById('input-nome').addEventListener('input', function (e) {
+    bozza.nome = e.target.value;
+    if (!bozza.foto) disegnaAvatar(document.getElementById('anteprima-foto'), null, bozza.nome);
+  });
+  document.getElementById('input-foto').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    ridimensiona(f, 320, .85, function (dati) {
+      bozza.foto = dati;
+      disegnaAvatar(document.getElementById('anteprima-foto'), dati, bozza.nome);
+    });
+    e.target.value = '';
+  });
+  document.getElementById('form-profilo').addEventListener('submit', function (e) {
+    e.preventDefault();
+    leggiCampiTessere();
+    bozza.nome = document.getElementById('input-nome').value.trim();
+    delete bozza.ucilink;
+    if (!bozza.cinema.length) { alert('Scegli almeno un cinema.'); return; }
+    var daSalvare = tessereBozza.filter(function (t) { return t.img || t.link || t.numero; })
+                                .map(function (t) { return { nome: t.nome || 'Tessera', numero: t.numero || '', img: t.img, link: t.link }; });
+    if (!scrivi('onescreen-profilo', bozza)) return;
+    if (!scrivi('onescreen-tessere', daSalvare)) return;
+    try { localStorage.removeItem('onescreen-card'); } catch (err) {}
+    profilo = bozza; tessere = daSalvare; primoAvvio = false;
+    aggiornaTestata();
+    chiudiProfilo();
+    applica();
+  });
+  btnProfilo.addEventListener('click', function () { apriProfilo(false); });
+
+  /* ---------- Codice a barre Code 128 (quello usato dalla card My UCI) ---------- */
+  // Larghezze di barre e spazi per ogni simbolo del Code 128 (0–105), più lo stop
+  var C128 = ('212222 222122 222221 121223 121322 131222 122213 122312 132212 221213 221312 231212 112232 122132 ' +
+    '122231 113222 123122 123221 223211 221132 221231 213212 223112 312131 311222 321122 321221 312212 322112 ' +
+    '322211 212123 212321 232121 111323 131123 131321 112313 132113 132311 211313 231113 231311 112133 112331 ' +
+    '132131 113123 113321 133121 313121 211331 231131 213113 213311 213131 311123 311321 331121 312113 312311 ' +
+    '332111 314111 221411 431111 111224 111422 121124 121421 141122 141221 112214 112412 122114 122411 142112 ' +
+    '142211 241211 221114 413111 241112 134111 111242 121142 121241 114212 124112 124211 411212 421112 421211 ' +
+    '212141 214121 412121 111143 111341 131141 114113 114311 411113 411311 113141 114131 311141 411131 211412 ' +
+    '211214 211232').split(' ');
+  var C128_STOP = '2331112';
+  // Numeri con cifre pari → set C (due cifre per simbolo, come la card UCI); altrimenti set B
+  function code128(testo) {
+    var valori = [];
+    if (/^\d+$/.test(testo) && testo.length % 2 === 0) {
+      valori.push(105);
+      for (var i = 0; i < testo.length; i += 2) valori.push(Number(testo.substr(i, 2)));
+    } else {
+      valori.push(104);
+      for (var j = 0; j < testo.length; j++) valori.push(Math.min(95, Math.max(0, testo.charCodeAt(j) - 32)));
+    }
+    var somma = valori[0];
+    for (var k = 1; k < valori.length; k++) somma += valori[k] * k;
+    valori.push(somma % 103);
+    return valori.map(function (v) { return C128[v]; }).join('') + C128_STOP;
+  }
+  function svgCodice(testo) {
+    var larghezze = code128(testo), x = 10, barre = '';
+    for (var i = 0; i < larghezze.length; i++) {
+      var w = Number(larghezze[i]);
+      if (i % 2 === 0) barre += '<rect x="' + x + '" y="0" width="' + w + '" height="60"/>';
+      x += w;
+    }
+    return '<svg class="codice-barre" viewBox="0 0 ' + (x + 10) + ' 60" preserveAspectRatio="none" role="img" aria-label="Codice a barre ' +
+           testo + '"><rect width="' + (x + 10) + '" height="60" fill="#fff"/><g fill="#000">' + barre + '</g></svg>';
+  }
+
+  /* ---------- Portafoglio: le tessere a tutto schermo ---------- */
+  var portafoglio = document.getElementById('portafoglio');
+  var carosello = document.getElementById('carosello');
+  var puntini = document.getElementById('puntini');
+  function iconaTessera(nome) { return /abbonament/i.test(nome || '') ? '🎟️' : '💳'; }
+  function apriPortafoglio() {
+    var visibili = tessere.filter(function (t) { return t.img || t.link || t.numero; });
+    if (visibili.length === 1 && !visibili[0].img && !visibili[0].numero) { window.open(visibili[0].link, '_blank', 'noopener'); return; }
+    carosello.innerHTML = ''; puntini.innerHTML = '';
+    visibili.forEach(function (t, i) {
+      var el = document.createElement('div'); el.className = 'tessera-portafoglio';
+      var nome = document.createElement('div'); nome.className = 'tp-nome';
+      var ic = document.createElement('i'); ic.textContent = iconaTessera(t.nome); nome.appendChild(ic);
+      nome.appendChild(document.createTextNode(t.nome));
+      if (!t.numero) el.appendChild(nome); // sulla tessera disegnata il nome c'è già
+      if (t.numero) {
+        // Tessera disegnata dall'app nello stile OneScreen, con il codice a barre generato dal numero
+        var carta = document.createElement('div'); carta.className = 'tp-carta';
+        carta.innerHTML = '<div class="tp-carta-testa"><span class="tp-carta-nome"></span><span class="tp-carta-sotto">OneScreen</span></div>' +
+                          '<div class="tp-carta-codice">' + svgCodice(t.numero) + '<div class="tp-carta-numero"></div></div>';
+        carta.querySelector('.tp-carta-nome').textContent = t.nome;
+        carta.querySelector('.tp-carta-numero').textContent = t.numero;
+        el.appendChild(carta);
+      }
+      if (t.img) {
+        var box = document.createElement('div'); box.className = 'tp-immagine' + (t.numero ? ' nascosto' : '');
+        var img = new Image(); img.src = t.img; img.alt = t.nome; box.appendChild(img); el.appendChild(box);
+        if (t.numero) {
+          var alterna = document.createElement('button'); alterna.type = 'button'; alterna.className = 'pulsante sec tp-alterna';
+          alterna.textContent = 'Mostra lo screenshot originale';
+          alterna.addEventListener('click', function () {
+            var nascosto = box.classList.toggle('nascosto');
+            el.querySelector('.tp-carta').classList.toggle('nascosto', !nascosto);
+            alterna.textContent = nascosto ? 'Mostra lo screenshot originale' : 'Mostra la tessera OneScreen';
+          });
+          el.appendChild(alterna);
+        }
+      }
+      if (t.link) {
+        var a = document.createElement('a'); a.className = 'pulsante pri tp-link'; a.href = t.link; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = 'Apri ' + t.nome; el.appendChild(a);
+      }
+      carosello.appendChild(el);
+      var p = document.createElement('span'); if (i === 0) p.className = 'attivo'; puntini.appendChild(p);
+    });
+    puntini.classList.toggle('nascosto', visibili.length < 2);
+    portafoglio.classList.remove('nascosto');
+    document.body.classList.add('bloccato');
+    carosello.scrollLeft = 0;
+  }
+  function chiudiPortafoglio() { portafoglio.classList.add('nascosto'); document.body.classList.remove('bloccato'); }
+  carosello.addEventListener('scroll', function () {
+    var i = Math.round(carosello.scrollLeft / Math.max(1, carosello.clientWidth));
+    Array.prototype.forEach.call(puntini.children, function (p, k) { p.classList.toggle('attivo', k === i); });
+  }, { passive: true });
+  btnCard.addEventListener('click', apriPortafoglio);
+  document.getElementById('chiudi-portafoglio').addEventListener('click', chiudiPortafoglio);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!portafoglio.classList.contains('nascosto')) chiudiPortafoglio();
+    else if (foglioProfilo.classList.contains('aperto')) chiudiProfilo();
+  });
+
+
+  /* ---------- Schermata di apertura ---------- */
+  var splash = document.getElementById('splash');
+  var ridotto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(function () {
+    splash.classList.add('via');
+    setTimeout(function () { splash.remove(); }, 600);
+    if (primoAvvio) setTimeout(function () { apriProfilo(true); }, 250);
+  }, ridotto ? 400 : 1500);
+
+  aggiornaTestata();
 
   sistemaDate();
   passati();
